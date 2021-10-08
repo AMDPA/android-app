@@ -1,0 +1,31 @@
+@startuml
+set namespaceSeparator ::
+
+class "solotec::main.dart::MyApp" {
+  +Widget* build()
+}
+
+class "solotec::main.dart::MyHomePage" {
+  +_MyHomePageState* createState()
+}
+
+class "solotec::main.dart::_MyHomePageState" {
+  +Widget* build()
+}
+
+class "solotec::design::includes::input.dart::Input" {
+  +String* title
+  +String* description
+  +TextEditingController* controller
+  +TextInputType* type
+  +bool* obscure
+  +IconData* icon
+  +Widget* build()
+}
+
+"solotec::design::includes::input.dart::Input" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"solotec::design::includes::input.dart::Input" o-- "flutter::src::services::text_input.dart::TextInputType"
+"solotec::design::includes::input.dart::Input" o-- "flutter::src::widgets::icon_data.dart::IconData"
+
+
+@enduml

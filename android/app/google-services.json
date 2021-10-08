@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "819185256333",
+    "project_id": "amacpa-ifes",
+    "storage_bucket": "amacpa-ifes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819185256333:android:a9cf8c16484578ede21fc4",
+        "android_client_info": {
+          "package_name": "com.amacpa.solotec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819185256333-e7bq6cl8j73k1livr6sa25f0mcp9u6qg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amacpa.solotec",
+            "certificate_hash": "a272af5c24de23772fa4235b02dee3fa0319ad05"
+          }
+        },
+        {
+          "client_id": "819185256333-vta9mq0et21slkis5r7i1t37hbjneqa8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxLoOYJn24ZkkYfXiN90RTAwkiGc1Jm-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819185256333-vta9mq0et21slkis5r7i1t37hbjneqa8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

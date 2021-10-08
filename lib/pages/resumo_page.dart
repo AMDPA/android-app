@@ -1,0 +1,130 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:solotec/includes/home_icons_solo_tec_icons.dart';
+import 'package:solotec/pages/dados_page.dart';
+import 'package:solotec/stores/resumo_store.dart';
+
+class ResumoPage extends StatelessWidget {
+  const ResumoPage(this.store, {Key key}) : super(key: key);
+
+  final ResumoStore store;
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: EdgeInsets.all(15),
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Ambiente', style: TextStyle(fontWeight: FontWeight.w500)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CardO1(
+                  title: 'Temperatura',
+                  icon: HomeIconsSoloTec.bi_thermometer_half,
+                  data: '35ºC',
+                ),
+                CardO1(
+                  title: 'Umidade',
+                  icon: HomeIconsSoloTec.bi_moistureumidade_icon,
+                  data: '70%',
+                ),
+                CardO1(
+                  title: 'Sensação',
+                  icon: HomeIconsSoloTec.layer1sensacao_icon,
+                  data: '32ºC',
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Solo',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CardO1(
+                  title: 'Temperatura',
+                  icon: HomeIconsSoloTec.bi_thermometer_half,
+                  data: '38ºC',
+                ),
+                CardO1(
+                  title: 'Umidade',
+                  icon: HomeIconsSoloTec.bi_moistureumidade_icon,
+                  data: '43%',
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Gazes',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            Card(
+              elevation: 10,
+              child: Container(
+                height: 250,
+                width: 350,
+                child: SimpleTimeSeriesChart.withSampleData(),
+              ),
+            )
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class CardO1 extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final String data;
+
+  CardO1({this.title, this.icon, this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.all(8),
+      elevation: 5,
+      child: Container(
+        height: 120,
+        width: 100,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              this.title,
+              style: TextStyle(color: Color(0xff612B02)),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Icon(
+              this.icon,
+              size: 35,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Observer(builder: (_) {
+              return Text(
+                this.data,
+                style: TextStyle(color: Color(0xff612B02), fontSize: 18),
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+}

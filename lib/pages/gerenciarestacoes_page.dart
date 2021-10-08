@@ -66,8 +66,7 @@ class _GerenciarEstacoesPageState extends State<GerenciarEstacoesPage> {
                                 builder: (_) {
                                   return ListTile(
                                     title: Text(store.estat[i].name),
-                                    subtitle: Text(
-                                        store.estat[i].localizacao.toString()),
+                                    subtitle: Text(store.estat[i].description),
                                   );
                                 },
                               );

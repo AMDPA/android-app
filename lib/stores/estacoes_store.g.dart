@@ -39,14 +39,6 @@ mixin _$EstacoesStore on _EstacoesStoreBase, Store {
     });
   }
 
-  final _$createEstacaoAsyncAction =
-      AsyncAction('_EstacoesStoreBase.createEstacao');
-
-  @override
-  Future createEstacao(EstacaoModel model) {
-    return _$createEstacaoAsyncAction.run(() => super.createEstacao(model));
-  }
-
   final _$getEstacoesAsyncAction =
       AsyncAction('_EstacoesStoreBase.getEstacoes');
 
@@ -55,18 +47,13 @@ mixin _$EstacoesStore on _EstacoesStoreBase, Store {
     return _$getEstacoesAsyncAction.run(() => super.getEstacoes());
   }
 
-  final _$_EstacoesStoreBaseActionController =
-      ActionController(name: '_EstacoesStoreBase');
+  final _$openAddEstacoesAsyncAction =
+      AsyncAction('_EstacoesStoreBase.openAddEstacoes');
 
   @override
-  dynamic openAddEstacoes(BuildContext context) {
-    final _$actionInfo = _$_EstacoesStoreBaseActionController.startAction(
-        name: '_EstacoesStoreBase.openAddEstacoes');
-    try {
-      return super.openAddEstacoes(context);
-    } finally {
-      _$_EstacoesStoreBaseActionController.endAction(_$actionInfo);
-    }
+  Future openAddEstacoes(BuildContext context) {
+    return _$openAddEstacoesAsyncAction
+        .run(() => super.openAddEstacoes(context));
   }
 
   @override

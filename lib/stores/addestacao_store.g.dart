@@ -114,6 +114,21 @@ mixin _$AddEstacaoStore on _AddEstacaoStoreBase, Store {
     });
   }
 
+  final _$posiEstacaoAtom = Atom(name: '_AddEstacaoStoreBase.posiEstacao');
+
+  @override
+  Position get posiEstacao {
+    _$posiEstacaoAtom.reportRead();
+    return super.posiEstacao;
+  }
+
+  @override
+  set posiEstacao(Position value) {
+    _$posiEstacaoAtom.reportWrite(value, super.posiEstacao, () {
+      super.posiEstacao = value;
+    });
+  }
+
   final _$redeTappedAsyncAction =
       AsyncAction('_AddEstacaoStoreBase.redeTapped');
 
@@ -178,7 +193,8 @@ nomeEstacao: ${nomeEstacao},
 descEstacao: ${descEstacao},
 ssidEstacao: ${ssidEstacao},
 passEstacao: ${passEstacao},
-operacEstacao: ${operacEstacao}
+operacEstacao: ${operacEstacao},
+posiEstacao: ${posiEstacao}
     ''';
   }
 }

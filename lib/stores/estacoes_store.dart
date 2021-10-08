@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:solotec/models/estacao_model.dart';
 import 'package:solotec/pages/addestacao_page.dart';
+import 'package:solotec/services/firestore.dart';
 part 'estacoes_store.g.dart';
 
 class EstacoesStore = _EstacoesStoreBase with _$EstacoesStore;
@@ -12,8 +13,7 @@ abstract class _EstacoesStoreBase with Store {
   _EstacoesStoreBase() {
     getEstacoes();
   }
-  FirebaseFirestore _db = FirebaseFirestore.instance;
-  User _user = FirebaseAuth.instance.currentUser;
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   @observable
   List<EstacaoModel> estat = [];
@@ -21,30 +21,14 @@ abstract class _EstacoesStoreBase with Store {
   @observable
   bool atuali = false;
 
-  CollectionReference<EstacaoModel> _getC() {
-    return _db
-        .collection('usuario_teste')
-        .doc('Estacoes')
-        .collection('itens')
-        .withConverter(
-            fromFirestore: (json, _) => EstacaoModel.fromJson(json.data()),
-            toFirestore: (EstacaoModel json, _) => json.toJson());
-  }
-
-  @action
-  createEstacao(EstacaoModel model) async {
-    try {
-      await _getC().doc().set(model, SetOptions(merge: true));
-    } catch (e) {
-      print("..ERRO: " + e.toString());
-    }
-  }
-
   @action
   getEstacoes() async {
     atuali = true;
     try {
-      await _getC().get().then((value) {
+      await FirestoreManage()
+          .getC(_auth.currentUser.uid, 'Estacoes', 'itens')
+          .get()
+          .then((value) {
         value.docs.map((e) => estat.add(e.data()));
       });
       atuali = false;
@@ -55,9 +39,10 @@ abstract class _EstacoesStoreBase with Store {
   }
 
   @action
-  openAddEstacoes(BuildContext context) {
-    Navigator.of(context)
+  openAddEstacoes(BuildContext context) async {
+    await Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => AddEstacaoPage()));
+    getEstacoes();
   }
 }
 

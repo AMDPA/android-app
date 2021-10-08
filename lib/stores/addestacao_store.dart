@@ -1,6 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:mobx/mobx.dart';
 import 'package:solotec/constants/enuns.dart';
+import 'package:solotec/models/estacao_model.dart';
 import 'package:solotec/services/esp32connect.dart';
+import 'package:solotec/services/firestore.dart';
+import 'package:solotec/services/local.dart';
 import 'package:solotec/services/permissoes.dart';
 import 'package:solotec/services/rede.dart';
 import 'package:wifi_iot/wifi_iot.dart';
@@ -16,6 +21,7 @@ abstract class _AddEstacaoStoreBase with Store {
 
   final scaffold = GlobalKey<ScaffoldState>();
   WifiNetwork _connected;
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   @observable
   int currentStep = 0;
@@ -37,6 +43,9 @@ abstract class _AddEstacaoStoreBase with Store {
 
   @observable
   ModoOperacionalEstacao operacEstacao = ModoOperacionalEstacao.Local;
+
+  @observable
+  Position posiEstacao;
 
   @action
   modoOpTapped(ModoOperacionalEstacao op) {
@@ -68,9 +77,8 @@ abstract class _AddEstacaoStoreBase with Store {
             descEstacao.text = "Estação " + _connected.ssid;
             currentStep += 1;
           } else {
-            ScaffoldMessenger.of(scaffold.currentContext).showSnackBar(SnackBar(
-                content: Text(
-                    'A rede selecionada não corresponde a uma estação. Tente novamente!')));
+            _erroDialog();
+            RedeManage().disconnectWiFi();
           }
         });
       }
@@ -82,12 +90,12 @@ abstract class _AddEstacaoStoreBase with Store {
     if (currentStep == 1) return;
 
     if (currentStep == 3) {
-      _loadDialog();
+      _config();
       return;
     }
-
     currentStep += 1;
     if (currentStep == 1) {
+      LocalManager().getAtual().then((value) => posiEstacao = value);
       RedeManage()
           .getWiFiInRealTime()
           .asObservable()
@@ -103,41 +111,90 @@ abstract class _AddEstacaoStoreBase with Store {
     currentStep -= 1;
   }
 
+  _config() async {
+    _loadDialog();
+    EstacaoModel es = EstacaoModel(
+        name: this.nomeEstacao.text,
+        description: this.descEstacao.text,
+        local: this.posiEstacao,
+        modoOP: this.operacEstacao,
+        apSsid: this.ssidEstacao.text,
+        apPass: this.passEstacao.text,
+        createdAt: DateTime.now());
+
+    await ESP32Manage().config(es).then((value) {
+      Navigator.of(scaffold.currentContext).pop();
+      if (value) {
+        FirestoreManage()
+            .getC(_auth.currentUser.uid, 'Estacoes', 'itens')
+            .doc()
+            .set(es);
+      } else {
+        _erroDialog();
+        return;
+      }
+
+      Navigator.of(scaffold.currentContext).pop();
+    });
+  }
+
   /// COMPLEMENTO DE NAVEGAÇÃO
   _loadDialog() {
     showDialog(
       barrierDismissible: false,
       context: scaffold.currentContext,
       builder: (BuildContext context) {
-        return LoadingDialog();
+        return AlertDialog(
+          content: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 6,
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Aguarde enquanto configuramos a estação',
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
+          ),
+        );
       },
     );
   }
-}
 
-class LoadingDialog extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 6,
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(),
-            SizedBox(
-              height: 10,
+  _erroDialog() {
+    showDialog(
+      barrierDismissible: false,
+      context: scaffold.currentContext,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 6,
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Ocorreu um erro. Tente novamente!',
+                  textAlign: TextAlign.center,
+                )
+              ],
             ),
-            Text(
-              'Aguarde enquanto configuramos a estação',
-              textAlign: TextAlign.center,
-            )
+          ),
+          actions: [
+            ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('OK')),
           ],
-        ),
-      ),
-      //actions: ,
+        );
+      },
     );
   }
 }

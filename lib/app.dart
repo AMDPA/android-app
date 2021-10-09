@@ -8,7 +8,7 @@ import 'package:solotec/stores/destination_store.dart';
 import 'package:solotec/stores/resumo_store.dart';
 import 'package:solotec/stores/configuracoes_store.dart';
 import 'package:solotec/stores/dados_store.dart';
-import 'package:solotec/stores/historico_store.dart';
+import 'package:solotec/stores/relatorios_store.dart';
 import 'package:solotec/includes/pagecontainer_include.dart';
 
 class App extends StatelessWidget {
@@ -27,8 +27,8 @@ class App extends StatelessWidget {
         Provider<DadosStore>(
           create: (_) => DadosStore(),
         ),
-        Provider<HistoricoStore>(
-          create: (_) => HistoricoStore(),
+        Provider<RelatoriosStore>(
+          create: (_) => RelatoriosStore(),
         ),
         Provider<ConfiguracoesStore>(
           create: (_) => ConfiguracoesStore(),

@@ -20,6 +20,9 @@ abstract class _AddEstacaoStoreBase with Store {
   }
 
   final scaffold = GlobalKey<ScaffoldState>();
+  final form = GlobalKey<FormState>();
+  final form1 = GlobalKey<FormState>();
+
   WifiNetwork _connected;
   FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -67,7 +70,7 @@ abstract class _AddEstacaoStoreBase with Store {
   @action
   redeTapped(int t) async {
     await RedeManage()
-        .connectWiFi(redes[t].ssid, 'nqad7601')
+        .connectWiFi(redes[t].ssid, 'HNCE5C10')
         .then((value) async {
       if (value) {
         await ESP32Manage().isEstacao().then((value2) {
@@ -88,20 +91,22 @@ abstract class _AddEstacaoStoreBase with Store {
   @action
   continued() {
     if (currentStep == 1) return;
-
+    if (currentStep == 2) {
+      if (!form.currentState.validate()) {
+        return;
+      }
+    }
     if (currentStep == 3) {
+      if (!form1.currentState.validate()) {
+        return;
+      }
       _config();
       return;
     }
     currentStep += 1;
     if (currentStep == 1) {
       LocalManager().getAtual().then((value) => posiEstacao = value);
-      RedeManage()
-          .getWiFiInRealTime()
-          .asObservable()
-          .listen((event) => redes = event);
-      // RedeManage().getWiFiInRealTime().forEach((element) => redes = element);
-      // RedeManage().getWiFi().then((value) => redes = value);
+      RedeManage().getWiFi().then((value) => redes = value);
     }
   }
 
@@ -129,6 +134,7 @@ abstract class _AddEstacaoStoreBase with Store {
             .getC(_auth.currentUser.uid, 'Estacoes', 'itens')
             .doc()
             .set(es);
+        RedeManage().disconnectWiFi();
       } else {
         _erroDialog();
         return;
@@ -174,15 +180,16 @@ abstract class _AddEstacaoStoreBase with Store {
       context: scaffold.currentContext,
       builder: (BuildContext context) {
         return AlertDialog(
+          title: Center(child: Text('ERRO')),
           content: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 6,
+            height: MediaQuery.of(context).size.height / 10,
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Ocorreu um erro. Tente novamente!',
+                  'O dispositivo selecionado não corresponde a uma estação do projeto AMACPA ~ SOLOTEC\nTente com uma rede diferente!',
                   textAlign: TextAlign.center,
                 )
               ],

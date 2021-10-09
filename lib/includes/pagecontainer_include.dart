@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:solotec/constants/enuns.dart';
 import 'package:solotec/pages/configuracoes_page.dart';
 import 'package:solotec/pages/dados_page.dart';
-import 'package:solotec/pages/historico_page.dart';
+import 'package:solotec/pages/relatorios_page.dart';
 import 'package:solotec/pages/resumo_page.dart';
 import 'package:solotec/stores/configuracoes_store.dart';
 import 'package:solotec/stores/dados_store.dart';
-import 'package:solotec/stores/historico_store.dart';
+import 'package:solotec/stores/relatorios_store.dart';
 import 'package:solotec/stores/resumo_store.dart';
 
 class PageContainerInclude extends StatelessWidget {
@@ -28,9 +28,9 @@ class PageContainerInclude extends StatelessWidget {
           builder: (_, store, __) => DadosPage(store),
         );
         break;
-      case Destination.Historico:
-        return Consumer<HistoricoStore>(
-          builder: (_, store, __) => HistoricoPage(store),
+      case Destination.Relatorios:
+        return Consumer<RelatoriosStore>(
+          builder: (_, store, __) => RelatoriosPage(store),
         );
         break;
       case Destination.Configuracoes:

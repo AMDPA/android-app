@@ -64,9 +64,9 @@ class AppBarTitle extends StatelessWidget {
           ],
         );
         break;
-      case Destination.Historico:
+      case Destination.Relatorios:
         return Text(
-          'Histórico',
+          'Relatórios',
           style: TextStyle(
             color: Color(0xff612B02),
             fontSize: 20,

@@ -60,23 +60,39 @@ class AddEstacaoPage extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: (store.currentStep == 1
+                                    children: store.currentStep == 0
                                         ? [
-                                            OutlinedButton(
-                                                onPressed: onStepCancel,
-                                                child: Text('ANTERIOR')),
                                             Container(
                                               width: 10,
-                                            )
-                                          ]
-                                        : [
-                                            OutlinedButton(
-                                                onPressed: onStepCancel,
-                                                child: Text('ANTERIOR')),
+                                            ),
                                             ElevatedButton(
                                                 onPressed: onStepContinue,
                                                 child: Text('PRÓXIMO')),
-                                          ]));
+                                          ]
+                                        : (store.currentStep == 1
+                                            ? [
+                                                OutlinedButton(
+                                                    onPressed: onStepCancel,
+                                                    child: Text('ANTERIOR')),
+                                                Container(
+                                                  width: 10,
+                                                )
+                                              ]
+                                            : [
+                                                OutlinedButton(
+                                                    onPressed: onStepCancel,
+                                                    child: Text('ANTERIOR')),
+                                                Observer(builder: (_) {
+                                                  return ElevatedButton(
+                                                      onPressed: onStepContinue,
+                                                      child:
+                                                          store.currentStep == 3
+                                                              ? Text(
+                                                                  'FINALIZAR')
+                                                              : Text(
+                                                                  'PRÓXIMO'));
+                                                }),
+                                              ]));
                               });
                             },
                             steps: [
@@ -156,22 +172,37 @@ class AddEstacaoPage extends StatelessWidget {
                                           'Agora vamos deixar a estação pronta para uso'),
                                       Divider(),
                                       Form(
+                                          key: store.form,
                                           child: Column(
-                                        children: [
-                                          TextFormField(
-                                            controller: store.nomeEstacao,
-                                            decoration: InputDecoration(
-                                                labelText:
-                                                    'Nome para a estação'),
-                                          ),
-                                          TextFormField(
-                                            controller: store.nomeEstacao,
-                                            decoration: InputDecoration(
-                                                labelText:
-                                                    'Descrição da estação'),
-                                          ),
-                                        ],
-                                      ))
+                                            children: [
+                                              TextFormField(
+                                                controller: store.nomeEstacao,
+                                                decoration: InputDecoration(
+                                                    labelText:
+                                                        'Nome para a estação'),
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return 'Preencha esse campo';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                              TextFormField(
+                                                controller: store.descEstacao,
+                                                decoration: InputDecoration(
+                                                    labelText:
+                                                        'Descrição da estação'),
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return 'Preencha esse campo';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                            ],
+                                          ))
                                     ],
                                   )),
                               Step(
@@ -185,72 +216,91 @@ class AddEstacaoPage extends StatelessWidget {
                                     physics: ScrollPhysics(),
                                     children: [
                                       Text('Modo operacional'),
-                                      Observer(builder: (_) {
-                                        return ListTile(
-                                          onTap: () => store.modoOpTapped(
-                                              ModoOperacionalEstacao.Local),
-                                          leading: Observer(builder: (_) {
-                                            return Radio<
-                                                    ModoOperacionalEstacao>(
-                                                value: ModoOperacionalEstacao
-                                                    .Local,
-                                                groupValue: store.operacEstacao,
-                                                onChanged:
-                                                    (ModoOperacionalEstacao
-                                                            value) =>
-                                                        store.modoOpTapped(
-                                                            value));
-                                          }),
-                                          title: Text('Local'),
-                                          subtitle: Text(
-                                              'Nesse modo, a estação é executada localmente e é necessario ativar o AP toda vez que quiser transmitir informações. Ideal para locais sem acesso a rede WiFi.'),
-                                        );
-                                      }),
-                                      Observer(builder: (_) {
-                                        return ListTile(
-                                          onTap: () => store.modoOpTapped(
-                                              ModoOperacionalEstacao.Remoto),
-                                          leading: Observer(builder: (_) {
-                                            return Radio<
-                                                    ModoOperacionalEstacao>(
-                                                value: ModoOperacionalEstacao
-                                                    .Remoto,
-                                                groupValue: store.operacEstacao,
-                                                onChanged:
-                                                    (ModoOperacionalEstacao
-                                                            value) =>
-                                                        store.modoOpTapped(
-                                                            value));
-                                          }),
-                                          title: Text('Remoto'),
-                                          subtitle: Text(
-                                              'Nesse modo, a estação é executada remotamente submetendo informações sempre que necessário. É Preciso uma conectiviade ativa com a internet atráves de uma rede WiFi'),
-                                        );
-                                      }),
+                                      ListTile(
+                                        onTap: () => store.modoOpTapped(
+                                            ModoOperacionalEstacao.Local),
+                                        leading: Observer(builder: (_) {
+                                          return Radio<ModoOperacionalEstacao>(
+                                              value:
+                                                  ModoOperacionalEstacao.Local,
+                                              groupValue: store.operacEstacao,
+                                              onChanged: (ModoOperacionalEstacao
+                                                      value) =>
+                                                  store.modoOpTapped(value));
+                                        }),
+                                        title: Text('Local'),
+                                        subtitle: Text(
+                                            'Nesse modo, a estação é executada localmente e é necessario ativar o AP toda vez que quiser transmitir informações. Ideal para locais sem acesso a rede WiFi.'),
+                                      ),
+                                      ListTile(
+                                        onTap: () => store.modoOpTapped(
+                                            ModoOperacionalEstacao.Remoto),
+                                        leading: Observer(builder: (_) {
+                                          return Radio<ModoOperacionalEstacao>(
+                                              value:
+                                                  ModoOperacionalEstacao.Remoto,
+                                              groupValue: store.operacEstacao,
+                                              onChanged: (ModoOperacionalEstacao
+                                                      value) =>
+                                                  store.modoOpTapped(value));
+                                        }),
+                                        title: Text('Remoto'),
+                                        subtitle: Text(
+                                            'Nesse modo, a estação é executada remotamente submetendo informações sempre que necessário. É Preciso uma conectiviade ativa com a internet atráves de uma rede WiFi'),
+                                      ),
                                       Divider(),
                                       Text('Informações de rede'),
-                                      Observer(builder: (_) {
-                                        return TextFormField(
-                                          controller: store.ssidEstacao,
-                                          decoration: InputDecoration(
-                                              labelText: (store.operacEstacao ==
-                                                      ModoOperacionalEstacao
-                                                          .Remoto
-                                                  ? 'Digite o Nome da sua rede WiFi'
-                                                  : 'Digite o Nome para o AP')),
-                                        );
-                                      }),
-                                      Observer(builder: (_) {
-                                        return TextFormField(
-                                          controller: store.passEstacao,
-                                          decoration: InputDecoration(
-                                              labelText: (store.operacEstacao ==
-                                                      ModoOperacionalEstacao
-                                                          .Remoto
-                                                  ? 'Digite a Senha da sua rede WiFi'
-                                                  : 'Digite a Senha para o AP')),
-                                        );
-                                      }),
+                                      Form(
+                                          key: store.form1,
+                                          child: Column(
+                                            children: [
+                                              Observer(builder: (_) {
+                                                return TextFormField(
+                                                  controller: store.ssidEstacao,
+                                                  decoration: InputDecoration(
+                                                      labelText: (store
+                                                                  .operacEstacao ==
+                                                              ModoOperacionalEstacao
+                                                                  .Remoto
+                                                          ? 'Digite o Nome da sua rede WiFi'
+                                                          : 'Digite o Nome para o AP')),
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return 'Preencha esse campo';
+                                                    }
+                                                    return null;
+                                                  },
+                                                );
+                                              }),
+                                              Observer(builder: (_) {
+                                                return TextFormField(
+                                                  controller: store.passEstacao,
+                                                  decoration: InputDecoration(
+                                                      labelText: (store
+                                                                  .operacEstacao ==
+                                                              ModoOperacionalEstacao
+                                                                  .Remoto
+                                                          ? 'Digite a Senha da sua rede WiFi'
+                                                          : 'Digite a Senha para o AP')),
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return 'Preencha esse campo';
+                                                    } else if (value.length <
+                                                            8 ||
+                                                        value.length > 15) {
+                                                      return 'Insira uma senha com 08 a 15 caracteres';
+                                                    }
+                                                    return null;
+                                                  },
+                                                );
+                                              }),
+                                            ],
+                                          )),
+                                      SizedBox(
+                                        height: 20,
+                                      )
                                     ],
                                   ))
                             ]);

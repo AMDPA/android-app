@@ -97,15 +97,15 @@ class ConfiguracoesPage extends StatelessWidget {
           subtitle: Text("Adicione, remova e edite estações"),
           onTap: () => store.openGerenciarEstacoes(context),
         ),
-        ListTile(
+        /*  ListTile(
           leading: Icon(
-            Icons.analytics,
+            Icons.history,
             color: Color(0xff612B02),
           ),
-          title: Text("Relatórios"),
+          title: Text("Histórico"),
           subtitle: Text("Crie, baixe e gerencie relatórios"),
           onTap: () {},
-        ),
+        ),*/
         ListTile(
           leading: Icon(
             Icons.person,

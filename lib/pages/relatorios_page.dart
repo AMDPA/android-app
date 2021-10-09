@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:solotec/stores/historico_store.dart';
+import 'package:solotec/stores/relatorios_store.dart';
 
-class HistoricoPage extends StatelessWidget {
-  const HistoricoPage(this.store, {Key key}) : super(key: key);
+class RelatoriosPage extends StatelessWidget {
+  const RelatoriosPage(this.store, {Key key}) : super(key: key);
 
-  final HistoricoStore store;
+  final RelatoriosStore store;
   @override
   Widget build(BuildContext context) {
     return Observer(

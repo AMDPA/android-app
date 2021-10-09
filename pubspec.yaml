@@ -42,7 +42,7 @@ dependencies:
   permission_handler:  
   wifi_iot: ^0.3.8
   http: 
-  geolocator: "^7.7.0"
+  geolocator: 
 
 
 

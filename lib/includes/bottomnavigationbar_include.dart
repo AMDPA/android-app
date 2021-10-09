@@ -44,9 +44,9 @@ class ButtonNavigationBarWidget extends StatelessWidget {
             ),
             IconButton(
                 iconSize: 30,
-                tooltip: 'Histórico',
+                tooltip: 'Relatórios',
                 icon: Icon(
-                  Icons.history,
+                  Icons.analytics,
                   color: (store.selectedDestinationIndex == 2
                       ? Colors.white
                       : Colors.white70),

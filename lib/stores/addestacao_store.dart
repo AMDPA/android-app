@@ -1,14 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mobx/mobx.dart';
 import 'package:solotec/constants/enuns.dart';
 import 'package:solotec/models/estacao_model.dart';
+import 'package:solotec/models/rede_model.dart';
 import 'package:solotec/services/esp32connect.dart';
 import 'package:solotec/services/firestore.dart';
 import 'package:solotec/services/local.dart';
 import 'package:solotec/services/permissoes.dart';
 import 'package:solotec/services/rede.dart';
-import 'package:wifi_iot/wifi_iot.dart';
 import 'package:flutter/material.dart';
 part 'addestacao_store.g.dart';
 
@@ -23,14 +24,11 @@ abstract class _AddEstacaoStoreBase with Store {
   final form = GlobalKey<FormState>();
   final form1 = GlobalKey<FormState>();
 
-  WifiNetwork _connected;
   FirebaseAuth _auth = FirebaseAuth.instance;
+  List<EstacaoModel> estat = [];
 
   @observable
   int currentStep = 0;
-
-  @observable
-  List<WifiNetwork> redes;
 
   @observable
   TextEditingController nomeEstacao = TextEditingController();
@@ -50,16 +48,15 @@ abstract class _AddEstacaoStoreBase with Store {
   @observable
   Position posiEstacao;
 
+  @observable
+  RedeModel redeModel;
+
+  @observable
+  bool redeSel = false;
+
   @action
   modoOpTapped(ModoOperacionalEstacao op) {
     operacEstacao = op;
-    if (operacEstacao == ModoOperacionalEstacao.Local) {
-      ssidEstacao.text = _connected.ssid;
-      passEstacao.text = 'nqad7601';
-    } else {
-      ssidEstacao.text = "";
-      passEstacao.text = "";
-    }
   }
 
   @action
@@ -68,28 +65,29 @@ abstract class _AddEstacaoStoreBase with Store {
   }
 
   @action
-  redeTapped(int t) async {
-    await RedeManage()
-        .connectWiFi(redes[t].ssid, 'HNCE5C10')
-        .then((value) async {
-      if (value) {
-        await ESP32Manage().isEstacao().then((value2) {
-          if (value2) {
-            _connected = redes[t];
-            nomeEstacao.text = _connected.ssid;
-            descEstacao.text = "Estação " + _connected.ssid;
-            currentStep += 1;
-          } else {
-            _erroDialog();
-            RedeManage().disconnectWiFi();
-          }
-        });
-      }
-    });
+  configTappet() async {
+    RedeManage.openWifiSettings();
+    _loadDialog("Aguarde...");
+
+    await Future.delayed(Duration(seconds: 30));
+
+    redeModel = await RedeManage.getRedeInfo();
+    redeSel = true;
+
+    Navigator.of(scaffold.currentContext).pop();
+
+    await Future.delayed(Duration(seconds: 5));
+    if (await ESP32Manage.isEstacao()) {
+      currentStep += 1;
+    } else {
+      _erroDialog(
+          'O dispositivo selecionado não corresponde a uma estação do projeto AMACPA ~ SOLOTEC\nTente com uma rede diferente!');
+      redeSel = false;
+    }
   }
 
   @action
-  continued() {
+  continued() async {
     if (currentStep == 1) return;
     if (currentStep == 2) {
       if (!form.currentState.validate()) {
@@ -97,55 +95,77 @@ abstract class _AddEstacaoStoreBase with Store {
       }
     }
     if (currentStep == 3) {
-      if (!form1.currentState.validate()) {
-        return;
+      if (operacEstacao == ModoOperacionalEstacao.Remoto) {
+        if (!form1.currentState.validate()) {
+          return;
+        }
       }
       _config();
       return;
     }
     currentStep += 1;
     if (currentStep == 1) {
-      LocalManager().getAtual().then((value) => posiEstacao = value);
-      RedeManage().getWiFi().then((value) => redes = value);
+      posiEstacao = await LocalManager.getAtual();
     }
   }
 
   @action
   cancel() {
     if (currentStep == 0) return;
+    if (currentStep == 1) {
+      redeSel = false;
+    }
     currentStep -= 1;
   }
 
   _config() async {
-    _loadDialog();
+    List<EstacaoModel> estat = <EstacaoModel>[];
+
+    await FirestoreManage.getEstacao().then((value) => estat.addAll(value));
+
+    int ide = 0;
+
+    if (estat != null) {
+      ide = estat.length;
+    }
+
+    // await FirebaseFirestore.instance.disableNetwork();
+    _loadDialog("Aguarde enquanto configuramos a estação.");
     EstacaoModel es = EstacaoModel(
+        id: ide + 1,
         name: this.nomeEstacao.text,
         description: this.descEstacao.text,
-        local: this.posiEstacao,
-        modoOP: this.operacEstacao,
-        apSsid: this.ssidEstacao.text,
-        apPass: this.passEstacao.text,
+        user: this._auth.currentUser.uid,
+        local: Local(
+            longitude: posiEstacao.longitude,
+            latitude: posiEstacao.latitude,
+            timestamp: posiEstacao.timestamp,
+            accuracy: posiEstacao.accuracy,
+            altitute: posiEstacao.altitude,
+            heading: posiEstacao.heading,
+            speed: posiEstacao.speed,
+            speedAccuracy: posiEstacao.speedAccuracy),
+        isRemote:
+            this.operacEstacao == ModoOperacionalEstacao.Remoto ? true : false,
+        localRede: LocalRede(
+            ssid: this.ssidEstacao.text, password: this.passEstacao.text),
         createdAt: DateTime.now());
 
-    await ESP32Manage().config(es).then((value) {
+    if (await ESP32Manage.config(es)) {
       Navigator.of(scaffold.currentContext).pop();
-      if (value) {
-        FirestoreManage()
-            .getC(_auth.currentUser.uid, 'Estacoes', 'itens')
-            .doc()
-            .set(es);
-        RedeManage().disconnectWiFi();
-      } else {
-        _erroDialog();
-        return;
-      }
-
+      await FirestoreManage.setEstacao(es);
+    } else {
       Navigator.of(scaffold.currentContext).pop();
-    });
+      _erroDialog("Não foi possivel configurar a estação. Tente novamente!");
+      await FirebaseFirestore.instance.enableNetwork();
+      return;
+    }
+    // await FirebaseFirestore.instance.enableNetwork();
+    Navigator.of(scaffold.currentContext).pop();
   }
 
   /// COMPLEMENTO DE NAVEGAÇÃO
-  _loadDialog() {
+  _loadDialog(String msg) {
     showDialog(
       barrierDismissible: false,
       context: scaffold.currentContext,
@@ -163,7 +183,7 @@ abstract class _AddEstacaoStoreBase with Store {
                   height: 10,
                 ),
                 Text(
-                  'Aguarde enquanto configuramos a estação',
+                  msg,
                   textAlign: TextAlign.center,
                 )
               ],
@@ -174,7 +194,7 @@ abstract class _AddEstacaoStoreBase with Store {
     );
   }
 
-  _erroDialog() {
+  _erroDialog(String erro) {
     showDialog(
       barrierDismissible: false,
       context: scaffold.currentContext,
@@ -189,7 +209,7 @@ abstract class _AddEstacaoStoreBase with Store {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'O dispositivo selecionado não corresponde a uma estação do projeto AMACPA ~ SOLOTEC\nTente com uma rede diferente!',
+                  erro,
                   textAlign: TextAlign.center,
                 )
               ],

@@ -40,10 +40,10 @@ dependencies:
   provider: "^6.0.1"
   charts_flutter: "^0.11.0"
   permission_handler:  
-  wifi_iot: ^0.3.8
   http: 
   geolocator: 
-
+  open_settings: ^2.0.2
+  network_info_plus: ^2.0.2
 
 
 dev_dependencies:  

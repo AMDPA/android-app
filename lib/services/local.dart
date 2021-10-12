@@ -1,8 +1,9 @@
 import 'package:geolocator/geolocator.dart';
 
 class LocalManager {
-  Future<Position> getAtual() async {
-    Position p = await Geolocator.getCurrentPosition(
+  LocalManager._();
+  static Future<Position> getAtual() async {
+    return await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
   }
 }

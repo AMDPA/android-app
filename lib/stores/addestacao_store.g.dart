@@ -24,21 +24,6 @@ mixin _$AddEstacaoStore on _AddEstacaoStoreBase, Store {
     });
   }
 
-  final _$redesAtom = Atom(name: '_AddEstacaoStoreBase.redes');
-
-  @override
-  List<WifiNetwork> get redes {
-    _$redesAtom.reportRead();
-    return super.redes;
-  }
-
-  @override
-  set redes(List<WifiNetwork> value) {
-    _$redesAtom.reportWrite(value, super.redes, () {
-      super.redes = value;
-    });
-  }
-
   final _$nomeEstacaoAtom = Atom(name: '_AddEstacaoStoreBase.nomeEstacao');
 
   @override
@@ -129,12 +114,49 @@ mixin _$AddEstacaoStore on _AddEstacaoStoreBase, Store {
     });
   }
 
-  final _$redeTappedAsyncAction =
-      AsyncAction('_AddEstacaoStoreBase.redeTapped');
+  final _$redeModelAtom = Atom(name: '_AddEstacaoStoreBase.redeModel');
 
   @override
-  Future redeTapped(int t) {
-    return _$redeTappedAsyncAction.run(() => super.redeTapped(t));
+  RedeModel get redeModel {
+    _$redeModelAtom.reportRead();
+    return super.redeModel;
+  }
+
+  @override
+  set redeModel(RedeModel value) {
+    _$redeModelAtom.reportWrite(value, super.redeModel, () {
+      super.redeModel = value;
+    });
+  }
+
+  final _$redeSelAtom = Atom(name: '_AddEstacaoStoreBase.redeSel');
+
+  @override
+  bool get redeSel {
+    _$redeSelAtom.reportRead();
+    return super.redeSel;
+  }
+
+  @override
+  set redeSel(bool value) {
+    _$redeSelAtom.reportWrite(value, super.redeSel, () {
+      super.redeSel = value;
+    });
+  }
+
+  final _$configTappetAsyncAction =
+      AsyncAction('_AddEstacaoStoreBase.configTappet');
+
+  @override
+  Future configTappet() {
+    return _$configTappetAsyncAction.run(() => super.configTappet());
+  }
+
+  final _$continuedAsyncAction = AsyncAction('_AddEstacaoStoreBase.continued');
+
+  @override
+  Future continued() {
+    return _$continuedAsyncAction.run(() => super.continued());
   }
 
   final _$_AddEstacaoStoreBaseActionController =
@@ -163,17 +185,6 @@ mixin _$AddEstacaoStore on _AddEstacaoStoreBase, Store {
   }
 
   @override
-  dynamic continued() {
-    final _$actionInfo = _$_AddEstacaoStoreBaseActionController.startAction(
-        name: '_AddEstacaoStoreBase.continued');
-    try {
-      return super.continued();
-    } finally {
-      _$_AddEstacaoStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic cancel() {
     final _$actionInfo = _$_AddEstacaoStoreBaseActionController.startAction(
         name: '_AddEstacaoStoreBase.cancel');
@@ -188,13 +199,14 @@ mixin _$AddEstacaoStore on _AddEstacaoStoreBase, Store {
   String toString() {
     return '''
 currentStep: ${currentStep},
-redes: ${redes},
 nomeEstacao: ${nomeEstacao},
 descEstacao: ${descEstacao},
 ssidEstacao: ${ssidEstacao},
 passEstacao: ${passEstacao},
 operacEstacao: ${operacEstacao},
-posiEstacao: ${posiEstacao}
+posiEstacao: ${posiEstacao},
+redeModel: ${redeModel},
+redeSel: ${redeSel}
     ''';
   }
 }

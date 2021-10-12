@@ -59,19 +59,40 @@ class _GerenciarEstacoesPageState extends State<GerenciarEstacoesPage> {
                       )
                     : Observer(
                         builder: (_) {
-                          return ListView.builder(
-                            itemCount: store.estat.length,
-                            itemBuilder: (context, i) {
-                              return Observer(
-                                builder: (_) {
-                                  return ListTile(
-                                    title: Text(store.estat[i].name),
-                                    subtitle: Text(store.estat[i].description),
-                                  );
-                                },
-                              );
-                            },
-                          );
+                          if (store.estat == null) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [Text('Nenhuma estação cadastrada')],
+                              ),
+                            );
+                          }
+                          return store.estat.length != 0
+                              ? ListView.builder(
+                                  itemCount: store.estat.length ?? 0,
+                                  itemBuilder: (context, i) {
+                                    return Observer(
+                                      builder: (_) {
+                                        return ListTile(
+                                          title: Text(store.estat[i].name),
+                                          subtitle:
+                                              Text(store.estat[i].description),
+                                        );
+                                      },
+                                    );
+                                  },
+                                )
+                              : Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text('Nenhuma estação cadastrada')
+                                    ],
+                                  ),
+                                );
                         },
                       );
               },

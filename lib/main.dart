@@ -10,9 +10,13 @@ Future<void> main() async {
 
   //Init firebase
   await Firebase.initializeApp();
-  if (Platform.isAndroid) {
-    FirebaseFirestore.instance.settings = Settings(persistenceEnabled: true);
-  } else {
+
+  if (!Platform.isAndroid &&
+      !Platform.isFuchsia &&
+      Platform.isIOS &&
+      Platform.isLinux &&
+      Platform.isMacOS &&
+      Platform.isWindows) {
     await FirebaseFirestore.instance.enablePersistence();
   }
 

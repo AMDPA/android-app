@@ -137,25 +137,44 @@ class AddEstacaoPage extends StatelessWidget {
                                     shrinkWrap: true,
                                     physics: ScrollPhysics(),
                                     children: [
-                                      Text(
-                                          'Selecione o nome da rede da estação que deseja adicionar.'),
-                                      Observer(builder: (_) {
-                                        return ListView.builder(
-                                            shrinkWrap: true,
-                                            physics: ScrollPhysics(),
-                                            itemCount: store.redes.length,
-                                            itemBuilder: (context, i) {
-                                              return Observer(builder: (_) {
-                                                return ListTile(
-                                                  onTap: () =>
-                                                      store.redeTapped(i),
-                                                  leading: Icon(Icons.wifi),
-                                                  title:
-                                                      Text(store.redes[i].ssid),
-                                                );
-                                              });
-                                            });
-                                      }),
+                                      Observer(
+                                        builder: (_) {
+                                          return (!store.redeSel
+                                              ? Column(children: [
+                                                  Text(
+                                                      'Abra as configurações de Wi-Fi do dispositivo e conecte-se a rede referente a estação.'),
+                                                  SizedBox(
+                                                    height: 20,
+                                                  ),
+                                                  ElevatedButton(
+                                                      onPressed: () =>
+                                                          store.configTappet(),
+                                                      child: Text(
+                                                          "IR PARA CONFIGURAÇÕES")),
+                                                  SizedBox(
+                                                    height: 20,
+                                                  ),
+                                                ])
+                                              : Container());
+                                        },
+                                      ),
+                                      Observer(
+                                        builder: (_) {
+                                          return store.redeSel
+                                              ? Column(children: [
+                                                  Text(
+                                                      'Antes de prosseguir vamos validar a rede:'),
+                                                  ListTile(
+                                                    title: Text(store
+                                                        .redeModel.wifiName),
+                                                    subtitle: Text(store
+                                                        .redeModel.wifiGateway),
+                                                  ),
+                                                  CircularProgressIndicator(),
+                                                ])
+                                              : Container();
+                                        },
+                                      ),
                                     ],
                                   )),
                               Step(
@@ -250,54 +269,65 @@ class AddEstacaoPage extends StatelessWidget {
                                       ),
                                       Divider(),
                                       Text('Informações de rede'),
-                                      Form(
-                                          key: store.form1,
-                                          child: Column(
-                                            children: [
-                                              Observer(builder: (_) {
-                                                return TextFormField(
-                                                  controller: store.ssidEstacao,
-                                                  decoration: InputDecoration(
-                                                      labelText: (store
-                                                                  .operacEstacao ==
-                                                              ModoOperacionalEstacao
-                                                                  .Remoto
-                                                          ? 'Digite o Nome da sua rede WiFi'
-                                                          : 'Digite o Nome para o AP')),
-                                                  validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
-                                                      return 'Preencha esse campo';
-                                                    }
-                                                    return null;
-                                                  },
-                                                );
-                                              }),
-                                              Observer(builder: (_) {
-                                                return TextFormField(
-                                                  controller: store.passEstacao,
-                                                  decoration: InputDecoration(
-                                                      labelText: (store
-                                                                  .operacEstacao ==
-                                                              ModoOperacionalEstacao
-                                                                  .Remoto
-                                                          ? 'Digite a Senha da sua rede WiFi'
-                                                          : 'Digite a Senha para o AP')),
-                                                  validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
-                                                      return 'Preencha esse campo';
-                                                    } else if (value.length <
-                                                            8 ||
-                                                        value.length > 15) {
-                                                      return 'Insira uma senha com 08 a 15 caracteres';
-                                                    }
-                                                    return null;
-                                                  },
-                                                );
-                                              }),
-                                            ],
-                                          )),
+                                      Observer(
+                                        builder: (_) {
+                                          return (store.operacEstacao ==
+                                                  ModoOperacionalEstacao.Remoto)
+                                              ? Form(
+                                                  key: store.form1,
+                                                  child: Column(
+                                                    children: [
+                                                      Observer(builder: (_) {
+                                                        return TextFormField(
+                                                          controller:
+                                                              store.ssidEstacao,
+                                                          decoration: InputDecoration(
+                                                              labelText: (store
+                                                                          .operacEstacao ==
+                                                                      ModoOperacionalEstacao
+                                                                          .Remoto
+                                                                  ? 'Digite o Nome da sua rede WiFi'
+                                                                  : 'Digite o Nome para o AP')),
+                                                          validator: (value) {
+                                                            if (value == null ||
+                                                                value.isEmpty) {
+                                                              return 'Preencha esse campo';
+                                                            }
+                                                            return null;
+                                                          },
+                                                        );
+                                                      }),
+                                                      Observer(builder: (_) {
+                                                        return TextFormField(
+                                                          controller:
+                                                              store.passEstacao,
+                                                          decoration: InputDecoration(
+                                                              labelText: (store
+                                                                          .operacEstacao ==
+                                                                      ModoOperacionalEstacao
+                                                                          .Remoto
+                                                                  ? 'Digite a Senha da sua rede WiFi'
+                                                                  : 'Digite a Senha para o AP')),
+                                                          validator: (value) {
+                                                            if (value == null ||
+                                                                value.isEmpty) {
+                                                              return 'Preencha esse campo';
+                                                            } else if (value
+                                                                        .length <
+                                                                    8 ||
+                                                                value.length >
+                                                                    15) {
+                                                              return 'Insira uma senha com 08 a 15 caracteres';
+                                                            }
+                                                            return null;
+                                                          },
+                                                        );
+                                                      }),
+                                                    ],
+                                                  ))
+                                              : Container();
+                                        },
+                                      ),
                                       SizedBox(
                                         height: 20,
                                       )

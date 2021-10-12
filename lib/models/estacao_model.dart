@@ -1,77 +1,119 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:solotec/constants/enuns.dart';
-
 class EstacaoModel {
-  EstacaoModel(
-      {this.name,
-      this.description,
-      this.local,
-      this.modoOP,
-      this.apSsid,
-      this.apPass,
-      this.createdAt});
+  int id;
   String name;
   String description;
-  String userUiid;
-  Position local;
-  ModoOperacionalEstacao modoOP;
-  String apSsid;
-  String apPass;
+  String user;
+  bool isRemote;
+  Local local;
+  LocalRede localRede;
   DateTime createdAt;
   DateTime updateAt = DateTime.now();
 
+  EstacaoModel({
+    this.id,
+    this.name,
+    this.description,
+    this.user,
+    this.isRemote,
+    this.local,
+    this.localRede,
+    this.createdAt,
+  });
+
   EstacaoModel.fromJson(Map<String, dynamic> json) {
-    this.name = json['name'] as String;
-    this.description = json['description'] as String;
-    this.userUiid = json['user'] as String;
-
-    Timestamp localTimestamp = json['local']['timestamp'] as Timestamp;
-    this.local = Position(
-        longitude: json['local']['longitude'] as double,
-        latitude: json['local']['latitude'] as double,
-        timestamp: localTimestamp.toDate(),
-        accuracy: json['local']['accuracy'] as double,
-        altitude: json['local']['altitude'] as double,
-        heading: json['local']['heading'] as double,
-        speed: json['local']['speed'] as double,
-        speedAccuracy: json['local']['speedAccuracy'] as double);
-
-    this.modoOP = (json['isRemote'] as bool)
-        ? ModoOperacionalEstacao.Remoto
-        : ModoOperacionalEstacao.Local;
-
-    this.apSsid = json['localRede']['ssid'] as String;
-    this.apPass = json['localRede']['password'] as String;
-
-    Timestamp create = json['createdAt'] as Timestamp;
-    Timestamp update = json['updateAt'] as Timestamp;
-    createdAt = create.toDate();
-    updateAt = update.toDate();
+    id = json['estacao'] as int;
+    name = json['name'] as String;
+    description = json['description'] as String;
+    user = json['user'] as String;
+    isRemote = json['isRemote'] as bool;
+    local = json['local'] != null ? new Local.fromJson(json['local']) : null;
+    localRede = json['localRede'] != null
+        ? new LocalRede.fromJson(json['localRede'])
+        : null;
+    createdAt = DateTime.parse(json['createdAt'] as String);
+    updateAt = DateTime.parse(json['updateAt'] as String);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'name': this.name,
-      'description': this.description,
-      'user': this.userUiid,
-      'local': {
-        'longitude': local.longitude,
-        'latitude': local.latitude,
-        'timestamp': Timestamp.fromDate(local.timestamp),
-        'accuracy': local.accuracy,
-        'altitute': local.altitude,
-        'heading': local.heading,
-        'speed': local.speed,
-        'speedAccuracy': local.speedAccuracy
-      },
-      'isRemote': (this.modoOP == ModoOperacionalEstacao.Remoto ? true : false),
-      'localRede': {
-        'ssid': this.apSsid,
-        'password': this.apPass,
-      },
-      "createdAt": Timestamp.fromDate(this.createdAt),
-      "updateAt": Timestamp.fromDate(this.updateAt)
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['estacao'] = this.id;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['user'] = this.user;
+    data['isRemote'] = this.isRemote;
+    if (this.local != null) {
+      data['local'] = this.local.toJson();
+    }
+    if (this.localRede != null) {
+      data['localRede'] = this.localRede.toJson();
+    }
+    data['createdAt'] = this.createdAt.toString();
+    data['updateAt'] = this.updateAt.toString();
+
+    return data;
+  }
+}
+
+class Local {
+  double longitude;
+  double latitude;
+  DateTime timestamp;
+  double accuracy;
+  double altitute;
+  double heading;
+  double speed;
+  double speedAccuracy;
+
+  Local(
+      {this.longitude,
+      this.latitude,
+      this.timestamp,
+      this.accuracy,
+      this.altitute,
+      this.heading,
+      this.speed,
+      this.speedAccuracy});
+
+  Local.fromJson(Map<String, dynamic> json) {
+    longitude = json['longitude'] as double;
+    latitude = json['latitude'] as double;
+    timestamp = DateTime.parse(json['timestamp'] as String);
+    accuracy = json['accuracy'] as double;
+    altitute = json['altitute'] as double;
+    heading = json['heading'] as double;
+    speed = json['speed'] as double;
+    speedAccuracy = json['speedAccuracy'] as double;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['longitude'] = this.longitude;
+    data['latitude'] = this.latitude;
+    data['timestamp'] = timestamp.toString();
+    data['accuracy'] = this.accuracy;
+    data['altitute'] = this.altitute;
+    data['heading'] = this.heading;
+    data['speed'] = this.speed;
+    data['speedAccuracy'] = this.speedAccuracy;
+    return data;
+  }
+}
+
+class LocalRede {
+  String ssid;
+  String password;
+
+  LocalRede({this.ssid, this.password});
+
+  LocalRede.fromJson(Map<String, dynamic> json) {
+    ssid = json['ssid'] as String;
+    password = json['password'] as String;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ssid'] = this.ssid;
+    data['password'] = this.password;
+    return data;
   }
 }

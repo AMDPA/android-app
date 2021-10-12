@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:solotec/models/estacao_model.dart';
@@ -13,10 +11,9 @@ abstract class _EstacoesStoreBase with Store {
   _EstacoesStoreBase() {
     getEstacoes();
   }
-  FirebaseAuth _auth = FirebaseAuth.instance;
 
   @observable
-  List<EstacaoModel> estat = [];
+  List<EstacaoModel> estat = <EstacaoModel>[];
 
   @observable
   bool atuali = false;
@@ -24,18 +21,10 @@ abstract class _EstacoesStoreBase with Store {
   @action
   getEstacoes() async {
     atuali = true;
-    try {
-      await FirestoreManage()
-          .getC(_auth.currentUser.uid, 'Estacoes', 'itens')
-          .get()
-          .then((value) {
-        value.docs.map((e) => estat.add(e.data()));
-      });
-      atuali = false;
-    } catch (e) {
-      atuali = false;
-      print("..ERRO: " + e.toString());
-    }
+
+    await FirestoreManage.getEstacao().then((value) => estat.addAll(value));
+
+    atuali = false;
   }
 
   @action

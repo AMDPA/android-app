@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:solotec/pages/gerenciarestacoes_page.dart';
+import 'package:solotec/pages/perfil_page.dart';
+import 'package:solotec/pages/sobre_page.dart';
 part 'configuracoes_store.g.dart';
 
 class ConfiguracoesStore = _ConfiguracoesStoreBase with _$ConfiguracoesStore;
@@ -35,5 +37,15 @@ abstract class _ConfiguracoesStoreBase with Store {
   Future<void> openGerenciarEstacoes(BuildContext context) async {
     await Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => GerenciarEstacoesPage()));
+  }
+
+  Future<void> openPerfil(BuildContext context) async {
+    await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => PerfilPage()));
+  }
+
+  Future<void> openSobre(BuildContext context) async {
+    await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => SobrePage()));
   }
 }

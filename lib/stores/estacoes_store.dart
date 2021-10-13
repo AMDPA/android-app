@@ -21,7 +21,7 @@ abstract class _EstacoesStoreBase with Store {
   @action
   getEstacoes() async {
     atuali = true;
-
+    estat = <EstacaoModel>[];
     await FirestoreManage.getEstacao().then((value) => estat.addAll(value));
 
     atuali = false;

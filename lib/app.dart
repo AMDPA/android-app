@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:solotec/includes/appbartitle_include.dart';
 import 'package:solotec/includes/bottomnavigationbar_include.dart';
+import 'package:solotec/includes/floatingbutton_include.dart';
 import 'package:solotec/stores/destination_store.dart';
 import 'package:solotec/stores/resumo_store.dart';
 import 'package:solotec/stores/configuracoes_store.dart';
@@ -59,11 +60,10 @@ class App extends StatelessWidget {
                         child: PageContainerInclude(store.selectedDestination),
                       ),
                       floatingActionButtonLocation:
-                          FloatingActionButtonLocation.centerDocked,
-                      floatingActionButton: FloatingActionButton(
-                        child: Icon(Icons.arrow_downward),
-                        onPressed: () {},
-                      ),
+                          store.selectedDestinationIndex == 1
+                              ? FloatingActionButtonLocation.centerDocked
+                              : FloatingActionButtonLocation.endFloat,
+                      floatingActionButton: FloatingButtonInclude(store),
                       bottomNavigationBar: ButtonNavigationBarWidget(store));
                 },
               );

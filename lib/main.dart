@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:solotec/splash.dart';
 
 Future<void> main() async {
@@ -19,6 +20,8 @@ Future<void> main() async {
       Platform.isWindows) {
     await FirebaseFirestore.instance.enablePersistence();
   }
+
+  Intl.defaultLocale = 'pt_BR';
 
   runApp(Splash());
 }

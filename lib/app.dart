@@ -4,7 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:solotec/includes/appbartitle_include.dart';
 import 'package:solotec/includes/bottomnavigationbar_include.dart';
-import 'package:solotec/includes/floatingbutton_include.dart';
 import 'package:solotec/stores/destination_store.dart';
 import 'package:solotec/stores/resumo_store.dart';
 import 'package:solotec/stores/configuracoes_store.dart';
@@ -13,8 +12,8 @@ import 'package:solotec/stores/relatorios_store.dart';
 import 'package:solotec/includes/pagecontainer_include.dart';
 
 class App extends StatelessWidget {
-  const App({Key key}) : super(key: key);
-
+  App({scaffold, Key key}) : super(key: key);
+  final scaffold = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -48,6 +47,7 @@ class App extends StatelessWidget {
               return Observer(
                 builder: (_) {
                   return Scaffold(
+                      key: scaffold,
                       backgroundColor: Colors.white,
                       appBar: AppBar(
                         brightness: Brightness.light,
@@ -60,10 +60,11 @@ class App extends StatelessWidget {
                         child: PageContainerInclude(store.selectedDestination),
                       ),
                       floatingActionButtonLocation:
-                          store.selectedDestinationIndex == 1
-                              ? FloatingActionButtonLocation.centerDocked
-                              : FloatingActionButtonLocation.endFloat,
-                      floatingActionButton: FloatingButtonInclude(store),
+                          FloatingActionButtonLocation.centerDocked,
+                      floatingActionButton: FloatingActionButton(
+                        child: Icon(Icons.arrow_downward),
+                        onPressed: () {},
+                      ),
                       bottomNavigationBar: ButtonNavigationBarWidget(store));
                 },
               );

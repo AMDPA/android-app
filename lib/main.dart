@@ -14,10 +14,10 @@ Future<void> main() async {
 
   if (!Platform.isAndroid &&
       !Platform.isFuchsia &&
-      Platform.isIOS &&
-      Platform.isLinux &&
-      Platform.isMacOS &&
-      Platform.isWindows) {
+      !Platform.isIOS &&
+      !Platform.isLinux &&
+      !Platform.isMacOS &&
+      !Platform.isWindows) {
     await FirebaseFirestore.instance.enablePersistence();
   }
 

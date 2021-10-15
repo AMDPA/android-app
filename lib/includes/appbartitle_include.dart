@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:solotec/constants/enuns.dart';
+import 'package:solotec/stores/relatorios_store.dart';
 import 'package:solotec/stores/resumo_store.dart';
 
 class AppBarTitle extends StatelessWidget {
@@ -65,12 +66,25 @@ class AppBarTitle extends StatelessWidget {
         );
         break;
       case Destination.Relatorios:
-        return Text(
-          'Relatórios',
-          style: TextStyle(
-            color: Color(0xff612B02),
-            fontSize: 20,
-          ),
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Relatórios',
+              style: TextStyle(
+                color: Color(0xff612B02),
+                fontSize: 20,
+              ),
+            ),
+            Consumer<RelatoriosStore>(builder: (_, store, __) {
+              return IconButton(
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.brown,
+                  ),
+                  onPressed: () => store.criarRelatorio(context));
+            })
+          ],
         );
         break;
       case Destination.Configuracoes:

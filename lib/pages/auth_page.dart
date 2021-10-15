@@ -243,7 +243,7 @@ class _AuthPageState extends State<AuthPage> {
                             },
                           );
                         }),
-                        SizedBox(
+                        /* SizedBox(
                           height: 15,
                         ),
                         Consumer<AuthStore>(
@@ -261,7 +261,7 @@ class _AuthPageState extends State<AuthPage> {
                               });
                             },
                           );
-                        }),
+                        }),*/
                       ],
                     ),
                   ),

@@ -70,6 +70,7 @@ class _GerenciarEstacoesPageState extends State<GerenciarEstacoesPage> {
                           }
                           return store.estat.length != 0
                               ? ListView.builder(
+                                  padding: EdgeInsets.all(15),
                                   itemCount: store.estat.length ?? 0,
                                   itemBuilder: (context, i) {
                                     return Observer(

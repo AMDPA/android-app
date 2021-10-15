@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "819185256333",
+    "firebase_url": "https://amacpa-ifes-default-rtdb.firebaseio.com",
     "project_id": "amacpa-ifes",
     "storage_bucket": "amacpa-ifes.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "819185256333-0rvpicm3pt3hotkfi8b96k2ia84093hn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amacpa.solotec",
+            "certificate_hash": "0e4f1ed91cbb21400b3c9e936e1aaced3f8b8783"
+          }
+        },
         {
           "client_id": "819185256333-e7bq6cl8j73k1livr6sa25f0mcp9u6qg.apps.googleusercontent.com",
           "client_type": 1,

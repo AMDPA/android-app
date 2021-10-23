@@ -7,11 +7,11 @@ class RedeModel {
       this.wifiSubmask,
       this.wifiBroadcast,
       this.wifiGateway});
-  String wifiName;
-  String wifiBSSID;
-  String wifiIP;
-  String wifiIPV6;
-  String wifiSubmask;
-  String wifiBroadcast;
-  String wifiGateway;
+  String? wifiName;
+  String? wifiBSSID;
+  String? wifiIP;
+  String? wifiIPV6;
+  String? wifiSubmask;
+  String? wifiBroadcast;
+  String? wifiGateway;
 }

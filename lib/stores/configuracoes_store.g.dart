@@ -12,13 +12,13 @@ mixin _$ConfiguracoesStore on _ConfiguracoesStoreBase, Store {
   final _$anonymousAtom = Atom(name: '_ConfiguracoesStoreBase.anonymous');
 
   @override
-  bool get anonymous {
+  bool? get anonymous {
     _$anonymousAtom.reportRead();
     return super.anonymous;
   }
 
   @override
-  set anonymous(bool value) {
+  set anonymous(bool? value) {
     _$anonymousAtom.reportWrite(value, super.anonymous, () {
       super.anonymous = value;
     });
@@ -27,13 +27,13 @@ mixin _$ConfiguracoesStore on _ConfiguracoesStoreBase, Store {
   final _$nomeAtom = Atom(name: '_ConfiguracoesStoreBase.nome');
 
   @override
-  String get nome {
+  String? get nome {
     _$nomeAtom.reportRead();
     return super.nome;
   }
 
   @override
-  set nome(String value) {
+  set nome(String? value) {
     _$nomeAtom.reportWrite(value, super.nome, () {
       super.nome = value;
     });
@@ -42,13 +42,13 @@ mixin _$ConfiguracoesStore on _ConfiguracoesStoreBase, Store {
   final _$emailAtom = Atom(name: '_ConfiguracoesStoreBase.email');
 
   @override
-  String get email {
+  String? get email {
     _$emailAtom.reportRead();
     return super.email;
   }
 
   @override
-  set email(String value) {
+  set email(String? value) {
     _$emailAtom.reportWrite(value, super.email, () {
       super.email = value;
     });
@@ -57,13 +57,13 @@ mixin _$ConfiguracoesStore on _ConfiguracoesStoreBase, Store {
   final _$imagemAtom = Atom(name: '_ConfiguracoesStoreBase.imagem');
 
   @override
-  String get imagem {
+  String? get imagem {
     _$imagemAtom.reportRead();
     return super.imagem;
   }
 
   @override
-  set imagem(String value) {
+  set imagem(String? value) {
     _$imagemAtom.reportWrite(value, super.imagem, () {
       super.imagem = value;
     });

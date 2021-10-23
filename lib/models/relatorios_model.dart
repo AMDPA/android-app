@@ -1,8 +1,8 @@
 class RelatoriosModel {
-  int dataInicial;
-  int dataFinal;
-  String url;
-  String descri;
+  int? dataInicial;
+  int? dataFinal;
+  String? url;
+  String? descri;
 
   RelatoriosModel({this.dataInicial, this.dataFinal, this.url});
 

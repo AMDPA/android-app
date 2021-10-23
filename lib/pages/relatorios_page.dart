@@ -4,14 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:solotec/stores/relatorios_store.dart';
 
 class RelatoriosPage extends StatelessWidget {
-  const RelatoriosPage(this.store, {Key key}) : super(key: key);
+  const RelatoriosPage(this.store, {Key? key}) : super(key: key);
 
   final RelatoriosStore store;
   @override
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) {
-        if (store.modelR != null && store.modelR.length != 0) {
+        if (store.modelR.length != 0) {
           return Observer(
             builder: (_) {
               return ListView.builder(
@@ -19,9 +19,9 @@ class RelatoriosPage extends StatelessWidget {
                   padding: EdgeInsets.all(15),
                   itemBuilder: (ctx, i) {
                     DateTime ini = DateTime.fromMillisecondsSinceEpoch(
-                        store.modelR[i].dataInicial * 1000);
+                        store.modelR[i].dataInicial! * 1000);
                     DateTime fim = DateTime.fromMillisecondsSinceEpoch(
-                        store.modelR[i].dataFinal * 1000);
+                        store.modelR[i].dataFinal! * 1000);
 
                     final df = new DateFormat('dd/MM/yyyy HH:mm ');
                     return ListTile(

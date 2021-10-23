@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:solotec/stores/destination_store.dart';
 
 class ButtonNavigationBarWidget extends StatelessWidget {
-  const ButtonNavigationBarWidget(this.store, {Key key}) : super(key: key);
+  const ButtonNavigationBarWidget(this.store, {Key? key}) : super(key: key);
   final DestinationStore store;
 
   @override

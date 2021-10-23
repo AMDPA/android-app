@@ -18,7 +18,7 @@ abstract class _AuthStoreBase with Store {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  UserCredential userCredential;
+  UserCredential? userCredential;
 
   @observable
   TextEditingController email = TextEditingController();
@@ -32,7 +32,7 @@ abstract class _AuthStoreBase with Store {
   @observable
   bool login = true;
   @observable
-  bool autenticated;
+  bool? autenticated;
 
   @action
   Future<bool> logout() async {
@@ -58,7 +58,7 @@ abstract class _AuthStoreBase with Store {
       userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
 
-      Navigator.of(scaffold.currentContext).pop();
+      Navigator.of(scaffold.currentContext!).pop();
       return true;
     } on FirebaseAuthException catch (e) {
       print("ALERT: Auth(13): " + e.code);
@@ -72,7 +72,7 @@ abstract class _AuthStoreBase with Store {
         erro = "Estamos com problemas. Tente novamente mais tarde";
       }
 
-      Navigator.of(scaffold.currentContext).pop();
+      Navigator.of(scaffold.currentContext!).pop();
       return false;
     }
   }
@@ -82,26 +82,26 @@ abstract class _AuthStoreBase with Store {
     erro = "null";
     _loadDialog();
 
-    GoogleSignInAccount googleUser;
+    GoogleSignInAccount? googleUser;
     GoogleSignInAuthentication googleAuth;
     var credential;
 
     try {
       googleUser = await GoogleSignIn().signIn();
-      googleAuth = await googleUser.authentication;
+      googleAuth = await googleUser!.authentication;
       credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
       userCredential = await _auth.signInWithCredential(credential);
-      Navigator.of(scaffold.currentContext).pop();
+      Navigator.of(scaffold.currentContext!).pop();
       return true;
     } catch (e) {
       print("ERR: Auth(42): " + e.toString());
       erro = "Não foi possivel autenticar-se com Google. Tente novamente";
 
-      Navigator.of(scaffold.currentContext).pop();
+      Navigator.of(scaffold.currentContext!).pop();
       return false;
     }
   }
@@ -128,7 +128,7 @@ abstract class _AuthStoreBase with Store {
         erro = "Estamos com problemas. Tente novamente mais tarde";
       }
 
-      Navigator.of(scaffold.currentContext).pop();
+      Navigator.of(scaffold.currentContext!).pop();
       return false;
     }
   }
@@ -138,13 +138,13 @@ abstract class _AuthStoreBase with Store {
 
     try {
       userCredential = await _auth.signInAnonymously();
-      Navigator.of(scaffold.currentContext).pop();
+      Navigator.of(scaffold.currentContext!).pop();
       return true;
     } on FirebaseAuthException catch (e) {
       erro = "Não foi possível prosseguir";
       print(e.code);
 
-      Navigator.of(scaffold.currentContext).pop();
+      Navigator.of(scaffold.currentContext!).pop();
       return false;
     }
   }
@@ -159,7 +159,7 @@ abstract class _AuthStoreBase with Store {
   _loadDialog() {
     showDialog(
       barrierDismissible: false,
-      context: scaffold.currentContext,
+      context: scaffold.currentContext!,
       builder: (BuildContext context) {
         return LoadingDialog();
       },

@@ -72,13 +72,13 @@ mixin _$AuthStore on _AuthStoreBase, Store {
   final _$autenticatedAtom = Atom(name: '_AuthStoreBase.autenticated');
 
   @override
-  bool get autenticated {
+  bool? get autenticated {
     _$autenticatedAtom.reportRead();
     return super.autenticated;
   }
 
   @override
-  set autenticated(bool value) {
+  set autenticated(bool? value) {
     _$autenticatedAtom.reportWrite(value, super.autenticated, () {
       super.autenticated = value;
     });

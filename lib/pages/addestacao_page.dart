@@ -6,7 +6,7 @@ import 'package:solotec/constants/enuns.dart';
 import 'package:solotec/stores/addestacao_store.dart';
 
 class AddEstacaoPage extends StatelessWidget {
-  const AddEstacaoPage({Key key}) : super(key: key);
+  const AddEstacaoPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -165,9 +165,9 @@ class AddEstacaoPage extends StatelessWidget {
                                                       'Antes de prosseguir vamos validar a rede:'),
                                                   ListTile(
                                                     title: Text(store
-                                                        .redeModel.wifiName),
+                                                        .redeModel!.wifiName!),
                                                     subtitle: Text(store
-                                                        .redeModel.wifiGateway),
+                                                        .redeModel!.wifiGateway!),
                                                   ),
                                                   CircularProgressIndicator(),
                                                 ])
@@ -242,7 +242,7 @@ class AddEstacaoPage extends StatelessWidget {
                                               value:
                                                   ModoOperacionalEstacao.Local,
                                               groupValue: store.operacEstacao,
-                                              onChanged: (ModoOperacionalEstacao
+                                              onChanged: (ModoOperacionalEstacao?
                                                       value) =>
                                                   store.modoOpTapped(value));
                                         }),
@@ -258,7 +258,7 @@ class AddEstacaoPage extends StatelessWidget {
                                               value:
                                                   ModoOperacionalEstacao.Remoto,
                                               groupValue: store.operacEstacao,
-                                              onChanged: (ModoOperacionalEstacao
+                                              onChanged: (ModoOperacionalEstacao?
                                                       value) =>
                                                   store.modoOpTapped(value));
                                         }),

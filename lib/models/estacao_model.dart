@@ -1,12 +1,12 @@
 class EstacaoModel {
-  int id;
-  String name;
-  String description;
-  String user;
-  bool isRemote;
-  Local local;
-  LocalRede localRede;
-  DateTime createdAt;
+  int? id;
+  String? name;
+  String? description;
+  String? user;
+  bool? isRemote;
+  Local? local;
+  LocalRede? localRede;
+  DateTime? createdAt;
   DateTime updateAt = DateTime.now();
 
   EstacaoModel({
@@ -21,11 +21,11 @@ class EstacaoModel {
   });
 
   EstacaoModel.fromJson(Map<String, dynamic> json) {
-    id = json['estacao'] as int;
-    name = json['name'] as String;
-    description = json['description'] as String;
-    user = json['user'] as String;
-    isRemote = json['isRemote'] as bool;
+    id = json['estacao'] as int?;
+    name = json['name'] as String?;
+    description = json['description'] as String?;
+    user = json['user'] as String?;
+    isRemote = json['isRemote'] as bool?;
     local = json['local'] != null ? new Local.fromJson(json['local']) : null;
     localRede = json['localRede'] != null
         ? new LocalRede.fromJson(json['localRede'])
@@ -42,10 +42,10 @@ class EstacaoModel {
     data['user'] = this.user;
     data['isRemote'] = this.isRemote;
     if (this.local != null) {
-      data['local'] = this.local.toJson();
+      data['local'] = this.local!.toJson();
     }
     if (this.localRede != null) {
-      data['localRede'] = this.localRede.toJson();
+      data['localRede'] = this.localRede!.toJson();
     }
     data['createdAt'] = this.createdAt.toString();
     data['updateAt'] = this.updateAt.toString();
@@ -55,14 +55,14 @@ class EstacaoModel {
 }
 
 class Local {
-  double longitude;
-  double latitude;
-  DateTime timestamp;
-  double accuracy;
-  double altitute;
-  double heading;
-  double speed;
-  double speedAccuracy;
+  double? longitude;
+  double? latitude;
+  DateTime? timestamp;
+  double? accuracy;
+  double? altitute;
+  double? heading;
+  double? speed;
+  double? speedAccuracy;
 
   Local(
       {this.longitude,
@@ -75,14 +75,14 @@ class Local {
       this.speedAccuracy});
 
   Local.fromJson(Map<String, dynamic> json) {
-    longitude = json['longitude'] as double;
-    latitude = json['latitude'] as double;
+    longitude = json['longitude'] as double?;
+    latitude = json['latitude'] as double?;
     timestamp = DateTime.parse(json['timestamp'] as String);
-    accuracy = json['accuracy'] as double;
-    altitute = json['altitute'] as double;
-    heading = json['heading'] as double;
-    speed = json['speed'] as double;
-    speedAccuracy = json['speedAccuracy'] as double;
+    accuracy = json['accuracy'] as double?;
+    altitute = json['altitute'] as double?;
+    heading = json['heading'] as double?;
+    speed = json['speed'] as double?;
+    speedAccuracy = json['speedAccuracy'] as double?;
   }
 
   Map<String, dynamic> toJson() {
@@ -100,14 +100,14 @@ class Local {
 }
 
 class LocalRede {
-  String ssid;
-  String password;
+  String? ssid;
+  String? password;
 
   LocalRede({this.ssid, this.password});
 
   LocalRede.fromJson(Map<String, dynamic> json) {
-    ssid = json['ssid'] as String;
-    password = json['password'] as String;
+    ssid = json['ssid'] as String?;
+    password = json['password'] as String?;
   }
 
   Map<String, dynamic> toJson() {

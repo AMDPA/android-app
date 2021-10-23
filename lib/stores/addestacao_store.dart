@@ -43,19 +43,19 @@ abstract class _AddEstacaoStoreBase with Store {
   TextEditingController passEstacao = TextEditingController();
 
   @observable
-  ModoOperacionalEstacao operacEstacao = ModoOperacionalEstacao.Local;
+  ModoOperacionalEstacao? operacEstacao = ModoOperacionalEstacao.Local;
 
   @observable
-  Position posiEstacao;
+  Position? posiEstacao;
 
   @observable
-  RedeModel redeModel;
+  RedeModel? redeModel;
 
   @observable
   bool redeSel = false;
 
   @action
-  modoOpTapped(ModoOperacionalEstacao op) {
+  modoOpTapped(ModoOperacionalEstacao? op) {
     operacEstacao = op;
   }
 
@@ -74,7 +74,7 @@ abstract class _AddEstacaoStoreBase with Store {
     redeModel = await RedeManage.getRedeInfo();
     redeSel = true;
 
-    Navigator.of(scaffold.currentContext).pop();
+    Navigator.of(scaffold.currentContext!).pop();
 
     await Future.delayed(Duration(seconds: 5));
     if (await ESP32Manage.isEstacao()) {
@@ -90,13 +90,13 @@ abstract class _AddEstacaoStoreBase with Store {
   continued() async {
     if (currentStep == 1) return;
     if (currentStep == 2) {
-      if (!form.currentState.validate()) {
+      if (!form.currentState!.validate()) {
         return;
       }
     }
     if (currentStep == 3) {
       if (operacEstacao == ModoOperacionalEstacao.Remoto) {
-        if (!form1.currentState.validate()) {
+        if (!form1.currentState!.validate()) {
           return;
         }
       }
@@ -125,6 +125,7 @@ abstract class _AddEstacaoStoreBase with Store {
 
     int ide = 0;
 
+    // ignore: unnecessary_null_comparison
     if (estat != null) {
       ide = estat.length;
     }
@@ -135,16 +136,16 @@ abstract class _AddEstacaoStoreBase with Store {
         id: ide + 1,
         name: this.nomeEstacao.text,
         description: this.descEstacao.text,
-        user: this._auth.currentUser.uid,
+        user: this._auth.currentUser!.uid,
         local: Local(
-            longitude: posiEstacao.longitude,
-            latitude: posiEstacao.latitude,
-            timestamp: posiEstacao.timestamp,
-            accuracy: posiEstacao.accuracy,
-            altitute: posiEstacao.altitude,
-            heading: posiEstacao.heading,
-            speed: posiEstacao.speed,
-            speedAccuracy: posiEstacao.speedAccuracy),
+            longitude: posiEstacao!.longitude,
+            latitude: posiEstacao!.latitude,
+            timestamp: posiEstacao!.timestamp,
+            accuracy: posiEstacao!.accuracy,
+            altitute: posiEstacao!.altitude,
+            heading: posiEstacao!.heading,
+            speed: posiEstacao!.speed,
+            speedAccuracy: posiEstacao!.speedAccuracy),
         isRemote:
             this.operacEstacao == ModoOperacionalEstacao.Remoto ? true : false,
         localRede: LocalRede(
@@ -152,23 +153,23 @@ abstract class _AddEstacaoStoreBase with Store {
         createdAt: DateTime.now());
 
     if (await ESP32Manage.config(es)) {
-      Navigator.of(scaffold.currentContext).pop();
+      Navigator.of(scaffold.currentContext!).pop();
       await FirestoreManage.setEstacao(es);
     } else {
-      Navigator.of(scaffold.currentContext).pop();
+      Navigator.of(scaffold.currentContext!).pop();
       _erroDialog("Não foi possivel configurar a estação. Tente novamente!");
       await FirebaseFirestore.instance.enableNetwork();
       return;
     }
     // await FirebaseFirestore.instance.enableNetwork();
-    Navigator.of(scaffold.currentContext).pop();
+    Navigator.of(scaffold.currentContext!).pop();
   }
 
   /// COMPLEMENTO DE NAVEGAÇÃO
   _loadDialog(String msg) {
     showDialog(
       barrierDismissible: false,
-      context: scaffold.currentContext,
+      context: scaffold.currentContext!,
       builder: (BuildContext context) {
         return AlertDialog(
           content: Container(
@@ -197,7 +198,7 @@ abstract class _AddEstacaoStoreBase with Store {
   _erroDialog(String erro) {
     showDialog(
       barrierDismissible: false,
-      context: scaffold.currentContext,
+      context: scaffold.currentContext!,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Center(child: Text('ERRO')),

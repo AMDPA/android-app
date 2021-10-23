@@ -87,13 +87,13 @@ mixin _$AddEstacaoStore on _AddEstacaoStoreBase, Store {
   final _$operacEstacaoAtom = Atom(name: '_AddEstacaoStoreBase.operacEstacao');
 
   @override
-  ModoOperacionalEstacao get operacEstacao {
+  ModoOperacionalEstacao? get operacEstacao {
     _$operacEstacaoAtom.reportRead();
     return super.operacEstacao;
   }
 
   @override
-  set operacEstacao(ModoOperacionalEstacao value) {
+  set operacEstacao(ModoOperacionalEstacao? value) {
     _$operacEstacaoAtom.reportWrite(value, super.operacEstacao, () {
       super.operacEstacao = value;
     });
@@ -102,13 +102,13 @@ mixin _$AddEstacaoStore on _AddEstacaoStoreBase, Store {
   final _$posiEstacaoAtom = Atom(name: '_AddEstacaoStoreBase.posiEstacao');
 
   @override
-  Position get posiEstacao {
+  Position? get posiEstacao {
     _$posiEstacaoAtom.reportRead();
     return super.posiEstacao;
   }
 
   @override
-  set posiEstacao(Position value) {
+  set posiEstacao(Position? value) {
     _$posiEstacaoAtom.reportWrite(value, super.posiEstacao, () {
       super.posiEstacao = value;
     });
@@ -117,13 +117,13 @@ mixin _$AddEstacaoStore on _AddEstacaoStoreBase, Store {
   final _$redeModelAtom = Atom(name: '_AddEstacaoStoreBase.redeModel');
 
   @override
-  RedeModel get redeModel {
+  RedeModel? get redeModel {
     _$redeModelAtom.reportRead();
     return super.redeModel;
   }
 
   @override
-  set redeModel(RedeModel value) {
+  set redeModel(RedeModel? value) {
     _$redeModelAtom.reportWrite(value, super.redeModel, () {
       super.redeModel = value;
     });
@@ -163,7 +163,7 @@ mixin _$AddEstacaoStore on _AddEstacaoStoreBase, Store {
       ActionController(name: '_AddEstacaoStoreBase');
 
   @override
-  dynamic modoOpTapped(ModoOperacionalEstacao op) {
+  dynamic modoOpTapped(ModoOperacionalEstacao? op) {
     final _$actionInfo = _$_AddEstacaoStoreBaseActionController.startAction(
         name: '_AddEstacaoStoreBase.modoOpTapped');
     try {

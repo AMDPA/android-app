@@ -5,7 +5,7 @@ import 'package:solotec/stores/auth_store.dart';
 import 'package:solotec/stores/configuracoes_store.dart';
 
 class ConfiguracoesPage extends StatelessWidget {
-  const ConfiguracoesPage(this.store, {Key key}) : super(key: key);
+  const ConfiguracoesPage(this.store, {Key? key}) : super(key: key);
 
   final ConfiguracoesStore store;
   @override
@@ -28,20 +28,20 @@ class ConfiguracoesPage extends StatelessWidget {
                       builder: (_) {
                         if (this.store.imagem != null) {
                           return CircleAvatar(
-                            backgroundImage: NetworkImage(this.store.imagem),
+                            backgroundImage: NetworkImage(this.store.imagem!),
                             radius: 60,
                           );
                         } else {
                           return CircleAvatar(
                             radius: 60,
-                            child: (this.store.anonymous
+                            child: (this.store.anonymous!
                                 ? Text('U', style: TextStyle(fontSize: 50))
                                 : (this.store.imagem != null
                                     ? Container()
                                     : Text(
                                         this
                                             .store
-                                            .nome
+                                            .nome!
                                             .characters
                                             .characterAt(0)
                                             .toString(),
@@ -57,7 +57,7 @@ class ConfiguracoesPage extends StatelessWidget {
                       builder: (_) {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: this.store.anonymous
+                          children: this.store.anonymous!
                               ? [
                                   Text('Usuário Anônimo',
                                       style: TextStyle(fontSize: 20)),

@@ -5,7 +5,7 @@ import 'package:solotec/pages/dados_page.dart';
 import 'package:solotec/stores/resumo_store.dart';
 
 class ResumoPage extends StatelessWidget {
-  const ResumoPage(this.store, {Key key}) : super(key: key);
+  const ResumoPage(this.store, {Key? key}) : super(key: key);
 
   final ResumoStore store;
   @override
@@ -84,9 +84,9 @@ class ResumoPage extends StatelessWidget {
 }
 
 class CardO1 extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final String data;
+  final String? title;
+  final IconData? icon;
+  final String? data;
 
   CardO1({this.title, this.icon, this.data});
 
@@ -103,7 +103,7 @@ class CardO1 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              this.title,
+              this.title!,
               style: TextStyle(color: Color(0xff612B02)),
             ),
             SizedBox(
@@ -118,7 +118,7 @@ class CardO1 extends StatelessWidget {
             ),
             Observer(builder: (_) {
               return Text(
-                this.data,
+                this.data!,
                 style: TextStyle(color: Color(0xff612B02), fontSize: 18),
               );
             }),

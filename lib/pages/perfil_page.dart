@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:solotec/stores/perfil_store.dart';
 
 class PerfilPage extends StatelessWidget {
-  const PerfilPage({Key key}) : super(key: key);
+  const PerfilPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,19 +47,19 @@ class PerfilPage extends StatelessWidget {
                         if (store.imagem != null) {
                           return CircleAvatar(
                             backgroundImage: NetworkImage(
-                              store.imagem,
+                              store.imagem!,
                             ),
                             radius: 80,
                           );
                         } else {
                           return CircleAvatar(
                             radius: 80,
-                            child: (store.anonymous
+                            child: (store.anonymous!
                                 ? Text('U', style: TextStyle(fontSize: 50))
                                 : (store.imagem != null
                                     ? Container()
                                     : Text(
-                                        store.nome.characters
+                                        store.nome!.characters
                                             .characterAt(0)
                                             .toString(),
                                         style: TextStyle(fontSize: 50)))),
@@ -72,11 +72,11 @@ class PerfilPage extends StatelessWidget {
                     ),
                     Divider(),
                     ListTile(
-                      title: Text(store.nome),
+                      title: Text(store.nome!),
                       subtitle: Text('Nome'),
                     ),
                     ListTile(
-                      title: Text(store.email),
+                      title: Text(store.email!),
                       subtitle: Text('E-mail'),
                     )
                   ],

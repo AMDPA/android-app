@@ -19,7 +19,7 @@ class HomeIconsSoloTec {
   HomeIconsSoloTec._();
 
   static const _kFontFam = 'HomeIconsSoloTec';
-  static const String _kFontPkg = null;
+  static const String? _kFontPkg = null;
 
   static const IconData bi_thermometer_half =
       IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);

@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MedicoesModel {
-  double cjmcu;
-  double hidrogenio;
-  Timestamp hora;
-  int id;
-  double luminosidade;
-  double temperatura;
-  double umidade;
-  String uuid;
+  double? cjmcu;
+  double? hidrogenio;
+  Timestamp? hora;
+  int? id;
+  double? luminosidade;
+  double? temperatura;
+  double? umidade;
+  String? uuid;
 
   MedicoesModel(
       {this.cjmcu,

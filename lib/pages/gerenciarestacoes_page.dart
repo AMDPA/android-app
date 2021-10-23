@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:solotec/stores/estacoes_store.dart';
 
 class GerenciarEstacoesPage extends StatefulWidget {
-  const GerenciarEstacoesPage({Key key}) : super(key: key);
+  const GerenciarEstacoesPage({Key? key}) : super(key: key);
 
   @override
   _GerenciarEstacoesPageState createState() => _GerenciarEstacoesPageState();
@@ -58,6 +58,7 @@ class _GerenciarEstacoesPageState extends State<GerenciarEstacoesPage> {
                       )
                     : Observer(
                         builder: (_) {
+                          // ignore: unnecessary_null_comparison
                           if (store.estat == null) {
                             return Center(
                               child: Column(
@@ -70,14 +71,14 @@ class _GerenciarEstacoesPageState extends State<GerenciarEstacoesPage> {
                           return store.estat.length != 0
                               ? ListView.builder(
                                   padding: EdgeInsets.all(15),
-                                  itemCount: store.estat.length ?? 0,
+                                  itemCount: store.estat.length,
                                   itemBuilder: (context, i) {
                                     return Observer(
                                       builder: (_) {
                                         return ListTile(
-                                          title: Text(store.estat[i].name),
+                                          title: Text(store.estat[i].name!),
                                           subtitle:
-                                              Text(store.estat[i].description),
+                                              Text(store.estat[i].description!),
                                         );
                                       },
                                     );

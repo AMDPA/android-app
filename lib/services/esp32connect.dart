@@ -40,13 +40,11 @@ class ESP32Manage {
             ),
           );
         },
-      ).then(
-        (_) async {
-          await http.get(
-            Uri.parse('http://192.168.4.1/rst/'),
-          );
-        },
-      );
+      ).then((_) async {
+        await http.get(
+          Uri.parse('http://192.168.4.1/rst/'),
+        );
+      });
 
       return true;
     } catch (e) {

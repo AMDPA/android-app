@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:solotec/stores/auth_store.dart';
 
 class AuthPage extends StatefulWidget {
-  const AuthPage({Key key}) : super(key: key);
+  const AuthPage({Key? key}) : super(key: key);
 
   @override
   _AuthPageState createState() => _AuthPageState();
@@ -100,9 +100,9 @@ class _AuthPageState extends State<AuthPage> {
                           validator: (value) {
                             Pattern pattern =
                                 r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                            RegExp regex = new RegExp(pattern);
+                            RegExp regex = new RegExp(pattern as String);
 
-                            if (value == null || value.isEmpty) {
+                            if (value.isEmpty) {
                               return 'Preencha esse campo';
                             } else if (!regex.hasMatch(value)) {
                               return 'Insira um e-mail válido';
@@ -120,7 +120,7 @@ class _AuthPageState extends State<AuthPage> {
                           title: 'Senha',
                           type: TextInputType.text,
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
+                            if (value.isEmpty) {
                               return 'Preencha esse campo';
                             } else if (value.length < 8 || value.length > 15) {
                               return 'Insira uma senha com 08 a 15 caracteres';
@@ -157,9 +157,9 @@ class _AuthPageState extends State<AuthPage> {
                                 title: (store.login ? "ENTRE" : "CADASTRAR"),
                                 titleColor: Color(0xff612B02),
                                 onTap: () async {
-                                  if (store.form.currentState.validate()) {
+                                  if (store.form.currentState!.validate()) {
                                     if (store.login) {
-                                      store.form.currentState.save();
+                                      store.form.currentState!.save();
                                       store
                                           .signInEmail(store.email.text,
                                               store.password.text)
@@ -169,7 +169,7 @@ class _AuthPageState extends State<AuthPage> {
                                         }
                                       });
                                     } else if (!store.login) {
-                                      store.form.currentState.save();
+                                      store.form.currentState!.save();
                                       store
                                           .registerEmail(store.email.text,
                                               store.password.text)
@@ -272,13 +272,13 @@ class _AuthPageState extends State<AuthPage> {
 }
 
 class InputText extends StatelessWidget {
-  final String title;
-  final String description;
-  final TextEditingController controller;
-  final TextInputType type;
-  final bool obscure;
-  final IconData icon;
-  final Function(String) validator;
+  final String? title;
+  final String? description;
+  final TextEditingController? controller;
+  final TextInputType? type;
+  final bool? obscure;
+  final IconData? icon;
+  final Function(String)? validator;
 
   InputText({
     this.title,
@@ -298,7 +298,7 @@ class InputText extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          this.title,
+          this.title!,
           style: TextStyle(
             color: Colors.white,
             fontSize: 16,
@@ -341,7 +341,7 @@ class InputText extends StatelessWidget {
             ),
             keyboardType: this.type ?? TextInputType.text,
             obscureText: this.obscure ?? false,
-            validator: this.validator,
+            validator: this.validator as String? Function(String?)?,
           ),
         ),
       ],
@@ -350,13 +350,13 @@ class InputText extends StatelessWidget {
 }
 
 class Button extends StatelessWidget {
-  final Color background;
-  final IconData icon;
-  final Color iconColor;
-  final String title;
-  final Color titleColor;
-  final String imageAsset;
-  final Function() onTap;
+  final Color? background;
+  final IconData? icon;
+  final Color? iconColor;
+  final String? title;
+  final Color? titleColor;
+  final String? imageAsset;
+  final Function()? onTap;
 
   Button({
     this.background,
@@ -373,7 +373,7 @@ class Button extends StatelessWidget {
     return Container(
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(this.background),
+          backgroundColor: MaterialStateProperty.all<Color?>(this.background),
           overlayColor: MaterialStateProperty.all<Color>(Color(0x33612b02)),
           elevation: MaterialStateProperty.all<double>(8),
           shape: MaterialStateProperty.all<OutlinedBorder>(
@@ -394,13 +394,13 @@ class Button extends StatelessWidget {
                   ? Icon(this.icon, color: this.iconColor)
                   : Container()),
               (this.imageAsset != null
-                  ? Image.asset(this.imageAsset, height: 24)
+                  ? Image.asset(this.imageAsset!, height: 24)
                   : Container()),
               (this.icon != null || this.imageAsset != null
                   ? SizedBox(width: 17)
                   : SizedBox(width: 0)),
               Text(
-                this.title,
+                this.title!,
                 style: TextStyle(
                   color: this.titleColor,
                   fontSize: 18,

@@ -9,7 +9,7 @@ import 'package:solotec/stores/auth_store.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 class Splash extends StatelessWidget {
-  const Splash({Key key}) : super(key: key);
+  const Splash({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class Splash extends StatelessWidget {
           builder: (context, store, _) {
             return Observer(
               builder: (_) {
-                if (store.autenticated) {
+                if (store.autenticated!) {
                   return App();
                 } else {
                   return AuthPage();

@@ -10,8 +10,8 @@ part 'gerarrelatorio_store.g.dart';
 class GerarRelatorioStore = _GerarRelatorioStoreBase with _$GerarRelatorioStore;
 
 abstract class _GerarRelatorioStoreBase with Store {
-  DateTime inicio, hfinal, getI, getF;
-  TimeOfDay hhoraI, hhoraF;
+  DateTime? inicio, hfinal, getI, getF;
+  TimeOfDay? hhoraI, hhoraF;
   final form = GlobalKey<FormState>();
   final scaffold = GlobalKey<ScaffoldState>();
 
@@ -34,20 +34,20 @@ abstract class _GerarRelatorioStoreBase with Store {
     _loadDialog("GERANDO RELATÓRIO", false);
 
     inicio =
-        DateTime(getI.year, getI.month, getI.day, hhoraI.hour, hhoraI.minute);
+        DateTime(getI!.year, getI!.month, getI!.day, hhoraI!.hour, hhoraI!.minute);
     hfinal =
-        DateTime(getF.year, getF.month, getF.day, hhoraF.hour, hhoraF.minute);
+        DateTime(getF!.year, getF!.month, getF!.day, hhoraF!.hour, hhoraF!.minute);
 
-    String url = await RelatoriosService.newRelatorio(inicio, hfinal);
+    String url = await RelatoriosService.newRelatorio(inicio!, hfinal!);
 
     RelatoriosModel m = RelatoriosModel(
-      dataInicial: (inicio.millisecondsSinceEpoch / 1000).round(),
-      dataFinal: (hfinal.millisecondsSinceEpoch / 1000).round(),
+      dataInicial: (inicio!.millisecondsSinceEpoch / 1000).round(),
+      dataFinal: (hfinal!.millisecondsSinceEpoch / 1000).round(),
       url: url,
     );
 
     await FirestoreManage.setRelatorio(m);
-    Navigator.of(scaffold.currentContext).pop();
+    Navigator.of(scaffold.currentContext!).pop();
 
     _loadDialog("BAIXANDO RELATÓRIO", true);
 
@@ -56,8 +56,8 @@ abstract class _GerarRelatorioStoreBase with Store {
     });
 
     if (d) {
-      Navigator.of(scaffold.currentContext).pop();
-      Navigator.of(scaffold.currentContext).pop();
+      Navigator.of(scaffold.currentContext!).pop();
+      Navigator.of(scaffold.currentContext!).pop();
     }
   }
 
@@ -65,7 +65,7 @@ abstract class _GerarRelatorioStoreBase with Store {
   _loadDialog(String msg, bool down) {
     showDialog(
       barrierDismissible: false,
-      context: scaffold.currentContext,
+      context: scaffold.currentContext!,
       builder: (BuildContext context) {
         return AlertDialog(
           content: Container(

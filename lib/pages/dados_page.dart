@@ -1,9 +1,10 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+
 import 'package:flutter/material.dart';
 import 'package:solotec/stores/dados_store.dart';
 
 class DadosPage extends StatelessWidget {
-  const DadosPage(this.store, {Key key}) : super(key: key);
+  const DadosPage(this.store, {Key? key}) : super(key: key);
 
   final DadosStore store;
   @override
@@ -81,7 +82,7 @@ class DadosPage extends StatelessWidget {
 
 class SimpleTimeSeriesChart extends StatelessWidget {
   final List<charts.Series> seriesList;
-  final bool animate;
+  final bool? animate;
 
   SimpleTimeSeriesChart(this.seriesList, {this.animate});
 
@@ -99,7 +100,7 @@ class SimpleTimeSeriesChart extends StatelessWidget {
     return Container(
       height: 210,
       child: new charts.TimeSeriesChart(
-        seriesList,
+        seriesList as List<charts.Series<dynamic, DateTime>>,
         animate: animate,
         // Optionally pass in a [DateTimeFactory] used by the chart. The factory
         // should create the same type of [DateTime] as the data provided. If none

@@ -20,9 +20,9 @@ class RelatoriosService {
           Uri.parse("https://api-amacpa.herokuapp.com/relatorio/$i/$f"),
           headers: {
             "Content-type": "application/json",
-            "User": FirestoreManage.getUser().uid,
-            "Email": FirestoreManage.getUser().email,
-            "Nome": FirestoreManage.getUser().displayName
+            "User": FirestoreManage.getUser()!.uid,
+            "Email": FirestoreManage.getUser()!.email!,
+            "Nome": FirestoreManage.getUser()!.displayName!
           });
       print("MSG::" + url.body.replaceAll("\"", ""));
       return url.body.replaceAll("\"", "");
@@ -36,7 +36,7 @@ class RelatoriosService {
       String url, void Function(int, int) receiveProgress) async {
     Directory down = await getApplicationDocumentsDirectory();
 
-    List<String> urlp = url.split('/${FirestoreManage.getUser().uid}/');
+    List<String> urlp = url.split('/${FirestoreManage.getUser()!.uid}/');
 
     final savePath = path.join('${down.path}/solotech/', urlp[urlp.length - 1]);
 
@@ -53,7 +53,7 @@ class RelatoriosService {
   static Future<void> openRelatorio(String urlOrigin) async {
     Directory down = await getApplicationDocumentsDirectory();
 
-    List<String> urlp = urlOrigin.split('/${FirestoreManage.getUser().uid}/');
+    List<String> urlp = urlOrigin.split('/${FirestoreManage.getUser()!.uid}/');
 
     final savePath = path.join('${down.path}/solotech/', urlp[urlp.length - 1]);
     OpenResult p = await OpenFile.open(savePath);
@@ -63,7 +63,7 @@ class RelatoriosService {
   static Future<bool> relatorioExiste(String urlOrigin) async {
     Directory down = await getApplicationDocumentsDirectory();
 
-    List<String> urlp = urlOrigin.split('/${FirestoreManage.getUser().uid}/');
+    List<String> urlp = urlOrigin.split('/${FirestoreManage.getUser()!.uid}/');
 
     final savePath = path.join('${down.path}/solotech/', urlp[urlp.length - 1]);
     if (await io.File(savePath).exists()) {

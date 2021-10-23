@@ -12,7 +12,7 @@ import 'package:solotec/stores/relatorios_store.dart';
 import 'package:solotec/includes/pagecontainer_include.dart';
 
 class App extends StatelessWidget {
-  App({scaffold, Key key}) : super(key: key);
+  App({scaffold, Key? key}) : super(key: key);
   final scaffold = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {

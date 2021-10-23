@@ -6,7 +6,7 @@ import 'package:solotec/stores/relatorios_store.dart';
 import 'package:solotec/stores/resumo_store.dart';
 
 class AppBarTitle extends StatelessWidget {
-  const AppBarTitle(this.destination, {Key key}) : super(key: key);
+  const AppBarTitle(this.destination, {Key? key}) : super(key: key);
   final Destination destination;
 
   @override
@@ -33,7 +33,7 @@ class AppBarTitle extends StatelessWidget {
             })
           ],
         );
-        break;
+
       case Destination.Dados:
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,7 +48,7 @@ class AppBarTitle extends StatelessWidget {
             Consumer<ResumoStore>(builder: (_, store, __) {
               return Observer(builder: (_) {
                 return DropdownButton<String>(
-                    onChanged: (String a) {},
+                    onChanged: (String? a) {},
                     value: 'est01',
                     items: [
                       DropdownMenuItem<String>(
@@ -64,7 +64,7 @@ class AppBarTitle extends StatelessWidget {
             })
           ],
         );
-        break;
+
       case Destination.Relatorios:
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,7 +86,6 @@ class AppBarTitle extends StatelessWidget {
             })
           ],
         );
-        break;
       case Destination.Configuracoes:
         return Text(
           'Configurações',
@@ -95,7 +94,6 @@ class AppBarTitle extends StatelessWidget {
             fontSize: 20,
           ),
         );
-        break;
       default:
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

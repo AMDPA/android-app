@@ -30,7 +30,7 @@ abstract class _RelatoriosStoreBase with Store {
     await FirestoreManage.getRelatorio().then((value) async {
       for (var item in value) {
         modelR.add(item);
-        if (await RelatoriosService.relatorioExiste(item.url)) {
+        if (await RelatoriosService.relatorioExiste(item.url!)) {
           modelD.add(-1);
         } else {
           modelD.add(1);
@@ -50,7 +50,7 @@ abstract class _RelatoriosStoreBase with Store {
   @action
   openRelatorio(int i) async {
     if (modelD[i] == -1) {
-      await RelatoriosService.openRelatorio(modelR[i].url);
+      await RelatoriosService.openRelatorio(modelR[i].url!);
     } else {
       //O ITEM TA BAIXANDO AINDA;
     }

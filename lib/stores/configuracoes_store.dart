@@ -10,28 +10,28 @@ class ConfiguracoesStore = _ConfiguracoesStoreBase with _$ConfiguracoesStore;
 
 abstract class _ConfiguracoesStoreBase with Store {
   _ConfiguracoesStoreBase() {
-    this.anonymous = _auth.currentUser.isAnonymous;
-    this.email = _auth.currentUser.email;
-    var n = _auth.currentUser.displayName.split(" ").length;
-    this.nome = _auth.currentUser.displayName.split(" ")[0] +
+    this.anonymous = _auth.currentUser!.isAnonymous;
+    this.email = _auth.currentUser!.email;
+    var n = _auth.currentUser!.displayName!.split(" ").length;
+    this.nome = _auth.currentUser!.displayName!.split(" ")[0] +
         " " +
-        _auth.currentUser.displayName.split(" ")[n - 1];
-    this.imagem = _auth.currentUser.photoURL;
+        _auth.currentUser!.displayName!.split(" ")[n - 1];
+    this.imagem = _auth.currentUser!.photoURL;
   }
 
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   @observable
-  bool anonymous;
+  bool? anonymous;
 
   @observable
-  String nome;
+  String? nome;
 
   @observable
-  String email;
+  String? email;
 
   @observable
-  String imagem;
+  String? imagem;
 
   @action
   Future<void> openGerenciarEstacoes(BuildContext context) async {

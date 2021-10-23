@@ -56,8 +56,7 @@ class _AuthPageState extends State<AuthPage> {
           systemNavigationBarDividerColor: Colors.transparent,
           systemNavigationBarIconBrightness: Brightness.light,
           statusBarColor: Color(0xff612B02),
-          statusBarBrightness: Brightness.dark,
-          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
         ),
         child: Consumer<AuthStore>(
           builder: (_, store, __) {
@@ -65,7 +64,6 @@ class _AuthPageState extends State<AuthPage> {
               key: store.scaffold,
               backgroundColor: Color(0xff612B02),
               appBar: AppBar(
-                brightness: Brightness.dark,
                 elevation: 0,
                 backgroundColor: Color(0xff612B02),
                 title: Observer(

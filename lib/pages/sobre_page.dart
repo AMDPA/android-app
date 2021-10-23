@@ -8,16 +8,15 @@ class SobrePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        systemNavigationBarColor: Color(0xffffffff),
-        systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarColor: Color(0xff612B02),
-        statusBarIconBrightness: Brightness.light,
-      ),
+          systemNavigationBarColor: Color(0xffffffff),
+          systemNavigationBarDividerColor: Colors.transparent,
+          systemNavigationBarIconBrightness: Brightness.dark,
+          statusBarColor: Color(0xff612B02),
+          statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.light),
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          brightness: Brightness.dark,
           backgroundColor: Color(0xff612B02),
           title: Text(
             "Sobre o aplicativo",

@@ -11,12 +11,12 @@ class PerfilPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle(
-          systemNavigationBarColor: Color(0xffffffff),
-          systemNavigationBarDividerColor: Colors.transparent,
-          systemNavigationBarIconBrightness: Brightness.dark,
-          statusBarColor: Color(0xff612B02),
-          statusBarIconBrightness: Brightness.light,
-        ),
+            systemNavigationBarColor: Color(0xffffffff),
+            systemNavigationBarDividerColor: Colors.transparent,
+            systemNavigationBarIconBrightness: Brightness.dark,
+            statusBarColor: Color(0xff612B02),
+            statusBarIconBrightness: Brightness.light,
+            statusBarBrightness: Brightness.light),
         child: Provider<PerfilStore>(
           create: (_) => PerfilStore(),
           child: Consumer<PerfilStore>(
@@ -24,7 +24,6 @@ class PerfilPage extends StatelessWidget {
               return Scaffold(
                 backgroundColor: Colors.white,
                 appBar: AppBar(
-                  brightness: Brightness.dark,
                   backgroundColor: Color(0xff612B02),
                   title: Text(
                     "Perfil",

@@ -2,6 +2,7 @@ class RelatoriosModel {
   int dataInicial;
   int dataFinal;
   String url;
+  String descri;
 
   RelatoriosModel({this.dataInicial, this.dataFinal, this.url});
 
@@ -9,6 +10,7 @@ class RelatoriosModel {
     dataInicial = json['dataInicial'];
     dataFinal = json['dataFinal'];
     url = json['url'];
+    descri = json['descricao'];
   }
 
   Map<String, dynamic> toJson() {
@@ -16,6 +18,7 @@ class RelatoriosModel {
     data['dataInicial'] = this.dataInicial;
     data['dataFinal'] = this.dataFinal;
     data['url'] = this.url;
+    data['descricao'] = this.descri;
     return data;
   }
 }

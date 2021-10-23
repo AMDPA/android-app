@@ -36,12 +36,12 @@ class App extends StatelessWidget {
       ],
       child: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle(
-            systemNavigationBarColor: Color(0xff612B02),
-            systemNavigationBarDividerColor: Colors.transparent,
-            systemNavigationBarIconBrightness: Brightness.light,
-            statusBarColor: Colors.white,
-            statusBarIconBrightness: Brightness.dark,
-          ),
+              systemNavigationBarColor: Color(0xff612B02),
+              systemNavigationBarDividerColor: Colors.transparent,
+              systemNavigationBarIconBrightness: Brightness.light,
+              statusBarColor: Colors.white,
+              statusBarIconBrightness: Brightness.dark,
+              statusBarBrightness: Brightness.light),
           child: Consumer<DestinationStore>(
             builder: (context, store, _) {
               return Observer(
@@ -50,7 +50,6 @@ class App extends StatelessWidget {
                       key: scaffold,
                       backgroundColor: Colors.white,
                       appBar: AppBar(
-                        brightness: Brightness.light,
                         backgroundColor: Colors.white,
                         elevation: 0,
                         title: AppBarTitle(store.selectedDestination),

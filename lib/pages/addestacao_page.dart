@@ -12,12 +12,12 @@ class AddEstacaoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        systemNavigationBarColor: Color(0xffffffff),
-        systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.white,
-        statusBarIconBrightness: Brightness.dark,
-      ),
+          systemNavigationBarColor: Color(0xffffffff),
+          systemNavigationBarDividerColor: Colors.transparent,
+          systemNavigationBarIconBrightness: Brightness.dark,
+          statusBarColor: Colors.white,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light),
       child: Provider<AddEstacaoStore>(
         create: (_) => AddEstacaoStore(),
         child: Consumer<AddEstacaoStore>(
@@ -27,7 +27,6 @@ class AddEstacaoPage extends StatelessWidget {
               backgroundColor: Colors.white,
               appBar: AppBar(
                 elevation: 0,
-                brightness: Brightness.light,
                 backgroundColor: Colors.white,
                 centerTitle: true,
                 title: Text(

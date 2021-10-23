@@ -17,19 +17,18 @@ class _GerenciarEstacoesPageState extends State<GerenciarEstacoesPage> {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        systemNavigationBarColor: Color(0xffffffff),
-        systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarColor: Color(0xff612B02),
-        statusBarIconBrightness: Brightness.light,
-      ),
+          systemNavigationBarColor: Color(0xffffffff),
+          systemNavigationBarDividerColor: Colors.transparent,
+          systemNavigationBarIconBrightness: Brightness.dark,
+          statusBarColor: Color(0xff612B02),
+          statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.light),
       child: Provider<EstacoesStore>(
         create: (_) => EstacoesStore(),
         child: Consumer<EstacoesStore>(builder: (context, store, _) {
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              brightness: Brightness.dark,
               backgroundColor: Color(0xff612B02),
               title: Text(
                 "Gerenciar estações",

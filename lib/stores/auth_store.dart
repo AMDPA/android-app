@@ -1,4 +1,3 @@
-
 import 'package:mobx/mobx.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -19,7 +18,7 @@ abstract class _AuthStoreBase with Store {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  UserCredential _userCredential;
+  UserCredential userCredential;
 
   @observable
   TextEditingController email = TextEditingController();
@@ -56,7 +55,7 @@ abstract class _AuthStoreBase with Store {
     _loadDialog();
 
     try {
-      _userCredential = await _auth.signInWithEmailAndPassword(
+      userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
 
       Navigator.of(scaffold.currentContext).pop();
@@ -95,8 +94,7 @@ abstract class _AuthStoreBase with Store {
         idToken: googleAuth.idToken,
       );
 
-      _userCredential = await _auth.signInWithCredential(credential);
-
+      userCredential = await _auth.signInWithCredential(credential);
       Navigator.of(scaffold.currentContext).pop();
       return true;
     } catch (e) {
@@ -113,7 +111,7 @@ abstract class _AuthStoreBase with Store {
     erro = "null";
     _loadDialog();
     try {
-      _userCredential = await _auth.createUserWithEmailAndPassword(
+      userCredential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
       return signInEmail(email, password);
@@ -139,7 +137,7 @@ abstract class _AuthStoreBase with Store {
     _loadDialog();
 
     try {
-      _userCredential = await _auth.signInAnonymously();
+      userCredential = await _auth.signInAnonymously();
       Navigator.of(scaffold.currentContext).pop();
       return true;
     } on FirebaseAuthException catch (e) {

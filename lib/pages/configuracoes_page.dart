@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:open_settings/open_settings.dart';
 import 'package:provider/provider.dart';
 import 'package:solotec/stores/auth_store.dart';
 import 'package:solotec/stores/configuracoes_store.dart';

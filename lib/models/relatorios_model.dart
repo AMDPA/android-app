@@ -4,7 +4,7 @@ class RelatoriosModel {
   String? url;
   String? descri;
 
-  RelatoriosModel({this.dataInicial, this.dataFinal, this.url});
+  RelatoriosModel({this.dataInicial, this.dataFinal, this.url, this.descri});
 
   RelatoriosModel.fromJson(Map<String, dynamic> json) {
     dataInicial = json['dataInicial'];

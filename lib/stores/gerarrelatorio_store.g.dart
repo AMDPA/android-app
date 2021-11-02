@@ -84,6 +84,21 @@ mixin _$GerarRelatorioStore on _GerarRelatorioStoreBase, Store {
     });
   }
 
+  final _$descAtom = Atom(name: '_GerarRelatorioStoreBase.desc');
+
+  @override
+  TextEditingController get desc {
+    _$descAtom.reportRead();
+    return super.desc;
+  }
+
+  @override
+  set desc(TextEditingController value) {
+    _$descAtom.reportWrite(value, super.desc, () {
+      super.desc = value;
+    });
+  }
+
   final _$gerarAsyncAction = AsyncAction('_GerarRelatorioStoreBase.gerar');
 
   @override
@@ -98,7 +113,8 @@ progress: ${progress},
 dataI: ${dataI},
 dataF: ${dataF},
 horaI: ${horaI},
-horaF: ${horaF}
+horaF: ${horaF},
+desc: ${desc}
     ''';
   }
 }

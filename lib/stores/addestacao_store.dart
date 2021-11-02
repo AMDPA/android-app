@@ -123,15 +123,10 @@ abstract class _AddEstacaoStoreBase with Store {
 
     await FirestoreManage.getEstacao().then((value) => estat.addAll(value));
 
-    int ide = 0;
+    int ide = estat.length;
 
-    // ignore: unnecessary_null_comparison
-    if (estat != null) {
-      ide = estat.length;
-    }
-
-    // await FirebaseFirestore.instance.disableNetwork();
     _loadDialog("Aguarde enquanto configuramos a estação.");
+
     EstacaoModel es = EstacaoModel(
         id: ide + 1,
         name: this.nomeEstacao.text,
@@ -158,10 +153,7 @@ abstract class _AddEstacaoStoreBase with Store {
     } else {
       Navigator.of(scaffold.currentContext!).pop();
       _erroDialog("Não foi possivel configurar a estação. Tente novamente!");
-      await FirebaseFirestore.instance.enableNetwork();
-      return;
     }
-    // await FirebaseFirestore.instance.enableNetwork();
     Navigator.of(scaffold.currentContext!).pop();
   }
 

@@ -26,10 +26,10 @@ class RelatoriosPage extends StatelessWidget {
                     final df = new DateFormat('dd/MM/yyyy HH:mm ');
                     return ListTile(
                         title: Text(
-                            "Relatório de ${fim.difference(ini).inDays} dias"),
+                            "${store.modelR[i].descri}, Relatório de ${fim.difference(ini).inDays} dias"),
                         subtitle:
                             Text('De ${df.format(ini)} até ${df.format(fim)}'),
-                        onTap: () => store.openRelatorio(i),
+                        onTap: () => store.openRelatorio(i, context),
                         trailing: Observer(
                           builder: (_) {
                             if (store.modelD[i] == -1) {

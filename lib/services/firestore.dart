@@ -61,6 +61,7 @@ class FirestoreManage {
         .withConverter(
             fromFirestore: (json, _) => RelatoriosModel.fromJson(json.data()!),
             toFirestore: (RelatoriosModel json, _) => json.toJson())
+        .orderBy("dataFinal", descending: true)
         .get()
         .then((value) {
       for (QueryDocumentSnapshot item in value.docs) {

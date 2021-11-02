@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:open_file/open_file.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
@@ -26,8 +27,8 @@ class RelatoriosService {
           });
       print("MSG::" + url.body.replaceAll("\"", ""));
       return url.body.replaceAll("\"", "");
-    } catch (e) {
-      print(e);
+    } catch (e, s) {
+      FirebaseCrashlytics.instance.recordError(e, s);
       return "";
     }
   }
@@ -45,7 +46,8 @@ class RelatoriosService {
     try {
       await dio.download(url, savePath, onReceiveProgress: receiveProgress);
       return true;
-    } catch (e) {
+    } catch (e, s) {
+      FirebaseCrashlytics.instance.recordError(e, s);
       return false;
     }
   }

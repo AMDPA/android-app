@@ -54,6 +54,21 @@ mixin _$RelatoriosStore on _RelatoriosStoreBase, Store {
     });
   }
 
+  final _$progressAtom = Atom(name: '_RelatoriosStoreBase.progress');
+
+  @override
+  double get progress {
+    _$progressAtom.reportRead();
+    return super.progress;
+  }
+
+  @override
+  set progress(double value) {
+    _$progressAtom.reportWrite(value, super.progress, () {
+      super.progress = value;
+    });
+  }
+
   final _$criarRelatorioAsyncAction =
       AsyncAction('_RelatoriosStoreBase.criarRelatorio');
 
@@ -66,8 +81,8 @@ mixin _$RelatoriosStore on _RelatoriosStoreBase, Store {
       AsyncAction('_RelatoriosStoreBase.openRelatorio');
 
   @override
-  Future openRelatorio(int i) {
-    return _$openRelatorioAsyncAction.run(() => super.openRelatorio(i));
+  Future openRelatorio(int i, BuildContext ctx) {
+    return _$openRelatorioAsyncAction.run(() => super.openRelatorio(i, ctx));
   }
 
   @override
@@ -75,7 +90,8 @@ mixin _$RelatoriosStore on _RelatoriosStoreBase, Store {
     return '''
 load: ${load},
 modelR: ${modelR},
-modelD: ${modelD}
+modelD: ${modelD},
+progress: ${progress}
     ''';
   }
 }

@@ -33,18 +33,18 @@ abstract class _GerarRelatorioStoreBase with Store {
   gerar() async {
     _loadDialog("GERANDO RELATÓRIO", false);
 
-    inicio =
-        DateTime(getI!.year, getI!.month, getI!.day, hhoraI!.hour, hhoraI!.minute);
-    hfinal =
-        DateTime(getF!.year, getF!.month, getF!.day, hhoraF!.hour, hhoraF!.minute);
+    inicio = DateTime(
+        getI!.year, getI!.month, getI!.day, hhoraI!.hour, hhoraI!.minute);
+    hfinal = DateTime(
+        getF!.year, getF!.month, getF!.day, hhoraF!.hour, hhoraF!.minute);
 
     String url = await RelatoriosService.newRelatorio(inicio!, hfinal!);
 
     RelatoriosModel m = RelatoriosModel(
-      dataInicial: (inicio!.millisecondsSinceEpoch / 1000).round(),
-      dataFinal: (hfinal!.millisecondsSinceEpoch / 1000).round(),
-      url: url,
-    );
+        dataInicial: (inicio!.millisecondsSinceEpoch / 1000).round(),
+        dataFinal: (hfinal!.millisecondsSinceEpoch / 1000).round(),
+        url: url,
+        descri: desc.text);
 
     await FirestoreManage.setRelatorio(m);
     Navigator.of(scaffold.currentContext!).pop();
@@ -52,12 +52,13 @@ abstract class _GerarRelatorioStoreBase with Store {
     _loadDialog("BAIXANDO RELATÓRIO", true);
 
     bool d = await RelatoriosService.downloadRelatorio(url, (r, t) {
-      progress = (r / t) * 100;
+      progress = (r / t);
     });
-
+    Navigator.of(scaffold.currentContext!).pop();
     if (d) {
       Navigator.of(scaffold.currentContext!).pop();
-      Navigator.of(scaffold.currentContext!).pop();
+    } else {
+      _erroDialog("Não foi posivel concluir o download");
     }
   }
 
@@ -79,8 +80,10 @@ abstract class _GerarRelatorioStoreBase with Store {
                   builder: (_) {
                     return down
                         ? CircularPercentIndicator(
+                            progressColor: Colors.brown,
+                            fillColor: Colors.white38,
                             percent: progress,
-                            radius: 360,
+                            radius: 50,
                           )
                         : CircularProgressIndicator();
                   },
@@ -95,6 +98,37 @@ abstract class _GerarRelatorioStoreBase with Store {
               ],
             ),
           ),
+        );
+      },
+    );
+  }
+
+  _erroDialog(String erro) {
+    showDialog(
+      barrierDismissible: false,
+      context: scaffold.currentContext!,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(child: Text('ERRO')),
+          content: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 10,
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  erro,
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('OK')),
+          ],
         );
       },
     );

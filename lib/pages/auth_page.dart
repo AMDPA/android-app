@@ -102,7 +102,7 @@ class _AuthPageState extends State<AuthPage> {
                                 r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
                             RegExp regex = new RegExp(pattern as String);
 
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return 'Preencha esse campo';
                             } else if (!regex.hasMatch(value)) {
                               return 'Insira um e-mail válido';
@@ -120,7 +120,7 @@ class _AuthPageState extends State<AuthPage> {
                           title: 'Senha',
                           type: TextInputType.text,
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return 'Preencha esse campo';
                             } else if (value.length < 8 || value.length > 15) {
                               return 'Insira uma senha com 08 a 15 caracteres';
@@ -278,7 +278,7 @@ class InputText extends StatelessWidget {
   final TextInputType? type;
   final bool? obscure;
   final IconData? icon;
-  final Function(String)? validator;
+  final String? Function(String?)? validator;
 
   InputText({
     this.title,
@@ -341,7 +341,7 @@ class InputText extends StatelessWidget {
             ),
             keyboardType: this.type ?? TextInputType.text,
             obscureText: this.obscure ?? false,
-            validator: this.validator as String? Function(String?)?,
+            validator: this.validator,
           ),
         ),
       ],

@@ -147,13 +147,17 @@ abstract class _AddEstacaoStoreBase with Store {
             ssid: this.ssidEstacao.text, password: this.passEstacao.text),
         createdAt: DateTime.now());
 
+    //FirebaseFirestore.instance.disableNetwork();
+
     if (await ESP32Manage.config(es)) {
+      FirestoreManage.setEstacao(es);
       Navigator.of(scaffold.currentContext!).pop();
-      await FirestoreManage.setEstacao(es);
     } else {
       Navigator.of(scaffold.currentContext!).pop();
       _erroDialog("Não foi possivel configurar a estação. Tente novamente!");
     }
+    //FirebaseFirestore.instance.enableNetwork();
+
     Navigator.of(scaffold.currentContext!).pop();
   }
 

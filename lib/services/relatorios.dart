@@ -25,8 +25,12 @@ class RelatoriosService {
             "Email": FirestoreManage.getUser()!.email!,
             "Nome": FirestoreManage.getUser()!.displayName!
           });
-      print("MSG::" + url.body.replaceAll("\"", ""));
-      return url.body.replaceAll("\"", "");
+
+      if (url.statusCode == 200) {
+        return url.body.replaceAll("\"", "");
+      }
+
+      return "";
     } catch (e, s) {
       FirebaseCrashlytics.instance.recordError(e, s);
       return "";

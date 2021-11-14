@@ -28,7 +28,7 @@ class SobrePage extends StatelessWidget {
           children: [
             ListTile(
               leading: Image.asset(
-                "assets/icons/google.png",
+                "assets/icons/app.png",
               ),
               title: Text(
                 "SoloTech",

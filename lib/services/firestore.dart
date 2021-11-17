@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:solotec/models/estacao_model.dart';
+import 'package:solotec/models/medicoes_model.dart';
 import 'package:solotec/models/relatorios_model.dart';
 
 class FirestoreManage {
@@ -66,6 +67,28 @@ class FirestoreManage {
         .then((value) {
       for (QueryDocumentSnapshot item in value.docs) {
         RelatoriosModel m = item.data() as RelatoriosModel;
+        modelList.add(m);
+      }
+    });
+
+    return modelList;
+  }
+
+  static Future<List<MedicoesModel>> getUltimaMedicao() async {
+    List<MedicoesModel> modelList = [];
+    await _db
+        .collection(getUser()!.uid)
+        .doc('Dados')
+        .collection('itens')
+        .withConverter(
+            fromFirestore: (json, _) => MedicoesModel.fromJson(json.data()!),
+            toFirestore: (MedicoesModel json, _) => json.toJson())
+        .orderBy("hora", descending: true)
+        .limit(10)
+        .get()
+        .then((value) {
+      for (QueryDocumentSnapshot item in value.docs) {
+        MedicoesModel m = item.data() as MedicoesModel;
         modelList.add(m);
       }
     });

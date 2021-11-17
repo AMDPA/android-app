@@ -29,9 +29,13 @@ abstract class _EstacoesStoreBase with Store {
 
   @action
   openAddEstacoes(BuildContext context) async {
-    await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => AddEstacaoPage()));
-    getEstacoes();
+    if (estat.length == 0) {
+      await Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => AddEstacaoPage()));
+      getEstacoes();
+    } else {
+      //inf
+    }
   }
 }
 

@@ -43,7 +43,7 @@ abstract class _AddEstacaoStoreBase with Store {
   TextEditingController passEstacao = TextEditingController();
 
   @observable
-  ModoOperacionalEstacao? operacEstacao = ModoOperacionalEstacao.Local;
+  ModoOperacionalEstacao? operacEstacao = ModoOperacionalEstacao.Remoto;
 
   @observable
   Position? posiEstacao;

@@ -60,10 +60,11 @@ class App extends StatelessWidget {
                       ),
                       floatingActionButtonLocation:
                           FloatingActionButtonLocation.centerDocked,
-                      floatingActionButton: FloatingActionButton(
+                      floatingActionButton: /*FloatingActionButton(
                         child: Icon(Icons.arrow_downward),
                         onPressed: () {},
-                      ),
+                      ),*/
+                          Container(),
                       bottomNavigationBar: ButtonNavigationBarWidget(store));
                 },
               );

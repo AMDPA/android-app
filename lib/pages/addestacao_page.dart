@@ -167,7 +167,8 @@ class AddEstacaoPage extends StatelessWidget {
                                                     title: Text(store
                                                         .redeModel!.wifiName!),
                                                     subtitle: Text(store
-                                                        .redeModel!.wifiGateway!),
+                                                        .redeModel!
+                                                        .wifiGateway!),
                                                   ),
                                                   CircularProgressIndicator(),
                                                 ])
@@ -235,16 +236,19 @@ class AddEstacaoPage extends StatelessWidget {
                                     children: [
                                       Text('Modo operacional'),
                                       ListTile(
+                                        enabled: false,
                                         onTap: () => store.modoOpTapped(
                                             ModoOperacionalEstacao.Local),
                                         leading: Observer(builder: (_) {
                                           return Radio<ModoOperacionalEstacao>(
-                                              value:
-                                                  ModoOperacionalEstacao.Local,
+                                              value: ModoOperacionalEstacao
+                                                  .Local,
                                               groupValue: store.operacEstacao,
-                                              onChanged: (ModoOperacionalEstacao?
-                                                      value) =>
-                                                  store.modoOpTapped(value));
+                                              onChanged:
+                                                  (ModoOperacionalEstacao?
+                                                          value) =>
+                                                      store
+                                                          .modoOpTapped(value));
                                         }),
                                         title: Text('Local'),
                                         subtitle: Text(
@@ -255,12 +259,14 @@ class AddEstacaoPage extends StatelessWidget {
                                             ModoOperacionalEstacao.Remoto),
                                         leading: Observer(builder: (_) {
                                           return Radio<ModoOperacionalEstacao>(
-                                              value:
-                                                  ModoOperacionalEstacao.Remoto,
+                                              value: ModoOperacionalEstacao
+                                                  .Remoto,
                                               groupValue: store.operacEstacao,
-                                              onChanged: (ModoOperacionalEstacao?
-                                                      value) =>
-                                                  store.modoOpTapped(value));
+                                              onChanged:
+                                                  (ModoOperacionalEstacao?
+                                                          value) =>
+                                                      store
+                                                          .modoOpTapped(value));
                                         }),
                                         title: Text('Remoto'),
                                         subtitle: Text(

@@ -9,74 +9,78 @@ class DadosPage extends StatelessWidget {
   final DadosStore store;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: Column(
+    return Column(
       children: [
-        ListTile(
-          selected: true,
-          selectedTileColor: Colors.brown,
-          leading: Icon(
-            Icons.calendar_today,
-            color: Colors.white,
-          ),
-          title: Text(
-            "Últimas 24h",
-            style: TextStyle(color: Colors.white),
-          ),
-          subtitle: Text(
-            "03/10/2021 - 04/10/2021",
-            style: TextStyle(color: Colors.white70),
-          ),
-        ),
-        ListView(
-          padding: EdgeInsets.all(15),
-          shrinkWrap: true,
+        Expanded(
+            child: Column(
           children: [
-            Card(
-              elevation: 5,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    "Umidade do Ar",
-                    style: TextStyle(fontSize: 20, color: Colors.brown),
-                  ),
-                  Divider(
-                    thickness: 2,
-                    color: Colors.brown,
-                  ),
-                  SimpleTimeSeriesChart.withSampleData(),
-                ],
+            ListTile(
+              selected: true,
+              selectedTileColor: Colors.brown,
+              leading: Icon(
+                Icons.calendar_today,
+                color: Colors.white,
+              ),
+              title: Text(
+                "Últimas 24h",
+                style: TextStyle(color: Colors.white),
+              ),
+              subtitle: Text(
+                "03/10/2021 - 04/10/2021",
+                style: TextStyle(color: Colors.white70),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Card(
-              elevation: 5,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 5,
+            ListView(
+              padding: EdgeInsets.all(15),
+              shrinkWrap: true,
+              children: [
+                Card(
+                  elevation: 5,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "Umidade do Ar",
+                        style: TextStyle(fontSize: 20, color: Colors.brown),
+                      ),
+                      Divider(
+                        thickness: 2,
+                        color: Colors.brown,
+                      ),
+                      SimpleTimeSeriesChart.withSampleData(),
+                    ],
                   ),
-                  Text(
-                    "Temperatura Ambiente",
-                    style: TextStyle(fontSize: 20, color: Colors.brown),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Card(
+                  elevation: 5,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "Temperatura Ambiente",
+                        style: TextStyle(fontSize: 20, color: Colors.brown),
+                      ),
+                      Divider(
+                        thickness: 2,
+                        color: Colors.brown,
+                      ),
+                      SimpleTimeSeriesChart.withSampleData(),
+                    ],
                   ),
-                  Divider(
-                    thickness: 2,
-                    color: Colors.brown,
-                  ),
-                  SimpleTimeSeriesChart.withSampleData(),
-                ],
-              ),
-            ),
+                ),
+              ],
+            )
           ],
-        )
+        ))
       ],
-    ));
+    );
   }
 }
 

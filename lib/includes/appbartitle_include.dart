@@ -108,7 +108,7 @@ class AppBarTitle extends StatelessWidget {
             Consumer<ResumoStore>(builder: (_, store, __) {
               return Observer(builder: (_) {
                 return Text(
-                  'Atualizado: ${store.atualizado}',
+                  'Atua.: ${store.atualizado}',
                   style: TextStyle(color: Colors.black, fontSize: 15),
                 );
               });

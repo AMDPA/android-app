@@ -71,6 +71,7 @@ flutter:
     - assets/icons/google.png
     - assets/icons/ifes.png
     - assets/icons/app.png
+    - assets/icons/app_pb.png
 
   fonts:
     - family:  HomeIconsSoloTec

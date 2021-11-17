@@ -64,7 +64,9 @@ class App extends StatelessWidget {
                         child: Icon(Icons.arrow_downward),
                         onPressed: () {},
                       ),*/
-                          Container(),
+                          Container(
+                            child: Image.asset('assets/icons/app_pb.png'),
+                          ),
                       bottomNavigationBar: ButtonNavigationBarWidget(store));
                 },
               );

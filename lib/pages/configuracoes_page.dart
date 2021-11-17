@@ -65,8 +65,17 @@ class ConfiguracoesPage extends StatelessWidget {
                               : [
                                   Text('${store.nome}',
                                       style: TextStyle(fontSize: 20)),
-                                  Text('${store.email}',
-                                      style: TextStyle(fontSize: 15))
+                                  Container(
+                                    height: 50,
+                                    width: 200,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                            child: Text('${store.email}',
+                                                style: TextStyle(fontSize: 15)))
+                                      ],
+                                    ),
+                                  ),
                                 ],
                         );
                       },

@@ -79,6 +79,8 @@ class _GerenciarEstacoesPageState extends State<GerenciarEstacoesPage> {
                                           title: Text(store.estat[i].name!),
                                           subtitle:
                                               Text(store.estat[i].description!),
+                                          onTap: () =>
+                                              store.openVerEstacoes(context, i),
                                         );
                                       },
                                     );

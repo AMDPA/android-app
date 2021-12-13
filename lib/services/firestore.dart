@@ -21,6 +21,10 @@ class FirestoreManage {
         .set(model);
   }
 
+  static Future<void> editEstacao(EstacaoModel model) async {}
+
+  static Future<void> deleteEstacao(EstacaoModel model) async {}
+
   static Future<List<EstacaoModel>> getEstacao() async {
     List<EstacaoModel> modelList = <EstacaoModel>[];
     await _db

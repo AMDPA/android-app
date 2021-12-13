@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mobx/mobx.dart';
@@ -16,7 +15,18 @@ part 'addestacao_store.g.dart';
 class AddEstacaoStore = _AddEstacaoStoreBase with _$AddEstacaoStore;
 
 abstract class _AddEstacaoStoreBase with Store {
-  _AddEstacaoStoreBase() {
+  _AddEstacaoStoreBase({EstacaoModel? model}) {
+    if (model != null) {
+      nomeEstacao.text = model.name as String;
+      descEstacao.text = model.description as String;
+      ssidEstacao.text = model.localRede!.ssid as String;
+      passEstacao.text = model.localRede!.password as String;
+      operacEstacao = model.isRemote as bool
+          ? ModoOperacionalEstacao.Remoto
+          : ModoOperacionalEstacao.Local;
+      edit = true;
+      editM = model;
+    }
     PermissoesManage().verifiquePermission();
   }
 
@@ -26,6 +36,8 @@ abstract class _AddEstacaoStoreBase with Store {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
   List<EstacaoModel> estat = [];
+  bool edit = false;
+  EstacaoModel editM = EstacaoModel();
 
   @observable
   int currentStep = 0;
@@ -121,14 +133,18 @@ abstract class _AddEstacaoStoreBase with Store {
   _config() async {
     List<EstacaoModel> estat = <EstacaoModel>[];
 
+    int idee = 0;
+    if (!edit) {
+      idee = estat.length + 1;
+    } else {
+      idee = editM.id as int;
+    }
     await FirestoreManage.getEstacao().then((value) => estat.addAll(value));
-
-    int ide = estat.length;
 
     _loadDialog("Aguarde enquanto configuramos a estação.");
 
     EstacaoModel es = EstacaoModel(
-        id: ide + 1,
+        id: idee,
         name: this.nomeEstacao.text,
         description: this.descEstacao.text,
         user: this._auth.currentUser!.uid,
@@ -145,12 +161,16 @@ abstract class _AddEstacaoStoreBase with Store {
             this.operacEstacao == ModoOperacionalEstacao.Remoto ? true : false,
         localRede: LocalRede(
             ssid: this.ssidEstacao.text, password: this.passEstacao.text),
-        createdAt: DateTime.now());
+        createdAt: edit ? editM.createdAt : DateTime.now());
 
     //FirebaseFirestore.instance.disableNetwork();
 
     if (await ESP32Manage.config(es)) {
-      FirestoreManage.setEstacao(es);
+      if (!edit) {
+        FirestoreManage.setEstacao(es);
+      } else {
+        FirestoreManage.editEstacao(es);
+      }
       Navigator.of(scaffold.currentContext!).pop();
     } else {
       Navigator.of(scaffold.currentContext!).pop();

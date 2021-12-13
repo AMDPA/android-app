@@ -10,75 +10,113 @@ class ResumoPage extends StatelessWidget {
   final ResumoStore store;
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.all(15),
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Ambiente', style: TextStyle(fontWeight: FontWeight.w500)),
-            Row(
+    return Observer(
+      builder: (_) {
+        if (store.ultimasMedicoes.length != 0) {
+          return ListView(
+            padding: EdgeInsets.all(15),
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Ambiente',
+                      style: TextStyle(fontWeight: FontWeight.w500)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Observer(builder: (_) {
+                        return CardO1(
+                          title: 'Temperatura',
+                          icon: HomeIconsSoloTec.bi_thermometer_half,
+                          data:
+                              '${store.ambienteTemperatura?.toStringAsFixed(1)}ºC',
+                        );
+                      }),
+                      Observer(builder: (_) {
+                        return CardO1(
+                          title: 'Umidade',
+                          icon: HomeIconsSoloTec.bi_moistureumidade_icon,
+                          data: '${store.ambienteUmidade?.toStringAsFixed(1)}%',
+                        );
+                      }),
+                      Observer(
+                        builder: (_) {
+                          return CardO1(
+                            title: 'Sensação',
+                            icon: HomeIconsSoloTec.layer1sensacao_icon,
+                            data:
+                                '${store.ambienteSensacao?.toStringAsFixed(1)}ºC',
+                          );
+                        },
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Solo',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Observer(builder: (_) {
+                        return CardO1(
+                          title: 'Temperatura',
+                          icon: HomeIconsSoloTec.bi_thermometer_half,
+                          data:
+                              '${store.soloTemperatura?.toStringAsFixed(1)}ºC',
+                        );
+                      }),
+                      Observer(builder: (_) {
+                        return CardO1(
+                          title: 'Umidade',
+                          icon: HomeIconsSoloTec.bi_moistureumidade_icon,
+                          data: '${store.soloUmidade?.toStringAsFixed(1)}%',
+                        );
+                      }),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Gazes',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                  Card(
+                    elevation: 10,
+                    child: Container(
+                      height: 250,
+                      width: 350,
+                      child: SimpleTimeSeriesChart.withSampleData(),
+                    ),
+                  )
+                ],
+              )
+            ],
+          );
+        } else if (store.load) {
+          return Center(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CardO1(
-                  title: 'Temperatura',
-                  icon: HomeIconsSoloTec.bi_thermometer_half,
-                  data: '35ºC',
-                ),
-                CardO1(
-                  title: 'Umidade',
-                  icon: HomeIconsSoloTec.bi_moistureumidade_icon,
-                  data: '70%',
-                ),
-                CardO1(
-                  title: 'Sensação',
-                  icon: HomeIconsSoloTec.layer1sensacao_icon,
-                  data: '32ºC',
-                ),
-              ],
+              children: [CircularProgressIndicator()],
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Solo',
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            Row(
+          );
+        } else {
+          return Center(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CardO1(
-                  title: 'Temperatura',
-                  icon: HomeIconsSoloTec.bi_thermometer_half,
-                  data: '38ºC',
-                ),
-                CardO1(
-                  title: 'Umidade',
-                  icon: HomeIconsSoloTec.bi_moistureumidade_icon,
-                  data: '43%',
-                ),
-              ],
+              children: [Text('Ainda não há dados')],
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Gazes',
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            Card(
-              elevation: 10,
-              child: Container(
-                height: 250,
-                width: 350,
-                child: SimpleTimeSeriesChart.withSampleData(),
-              ),
-            )
-          ],
-        )
-      ],
+          );
+        }
+      },
     );
   }
 }

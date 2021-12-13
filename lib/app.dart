@@ -65,8 +65,13 @@ class App extends StatelessWidget {
                         onPressed: () {},
                       ),*/
                           Container(
-                            child: Image.asset('assets/icons/app_pb.png'),
-                          ),
+                        decoration: BoxDecoration(
+                            color: Colors.brown,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(100))),
+                        width: 60,
+                        child: Image.asset('assets/icons/app_pb.png'),
+                      ),
                       bottomNavigationBar: ButtonNavigationBarWidget(store));
                 },
               );

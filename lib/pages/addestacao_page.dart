@@ -3,11 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:solotec/constants/enuns.dart';
+import 'package:solotec/models/estacao_model.dart';
 import 'package:solotec/stores/addestacao_store.dart';
 
 class AddEstacaoPage extends StatelessWidget {
-  const AddEstacaoPage({Key? key}) : super(key: key);
-
+  const AddEstacaoPage({Key? key, this.estModel}) : super(key: key);
+  final EstacaoModel? estModel;
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -19,7 +20,7 @@ class AddEstacaoPage extends StatelessWidget {
           statusBarIconBrightness: Brightness.dark,
           statusBarBrightness: Brightness.light),
       child: Provider<AddEstacaoStore>(
-        create: (_) => AddEstacaoStore(),
+        create: (_) => AddEstacaoStore(model: estModel),
         child: Consumer<AddEstacaoStore>(
           builder: (context, store, _) {
             return Scaffold(
@@ -30,7 +31,7 @@ class AddEstacaoPage extends StatelessWidget {
                 backgroundColor: Colors.white,
                 centerTitle: true,
                 title: Text(
-                  "Nova Estação",
+                  estModel != null ? "Editar Estação" : "Nova Estação",
                   style: TextStyle(color: Colors.brown),
                 ),
                 leading: IconButton(

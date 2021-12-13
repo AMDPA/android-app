@@ -56,6 +56,15 @@ mixin _$EstacoesStore on _EstacoesStoreBase, Store {
         .run(() => super.openAddEstacoes(context));
   }
 
+  final _$openVerEstacoesAsyncAction =
+      AsyncAction('_EstacoesStoreBase.openVerEstacoes');
+
+  @override
+  Future openVerEstacoes(BuildContext context, int i) {
+    return _$openVerEstacoesAsyncAction
+        .run(() => super.openVerEstacoes(context, i));
+  }
+
   @override
   String toString() {
     return '''

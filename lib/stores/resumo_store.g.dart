@@ -131,6 +131,21 @@ mixin _$ResumoStore on _ResumoStoreBase, Store {
     });
   }
 
+  final _$seriesAtom = Atom(name: '_ResumoStoreBase.series');
+
+  @override
+  List<charts.Series<MedicoesModel, DateTime>> get series {
+    _$seriesAtom.reportRead();
+    return super.series;
+  }
+
+  @override
+  set series(List<charts.Series<MedicoesModel, DateTime>> value) {
+    _$seriesAtom.reportWrite(value, super.series, () {
+      super.series = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
@@ -141,7 +156,8 @@ ambienteUmidade: ${ambienteUmidade},
 ambienteSensacao: ${ambienteSensacao},
 soloTemperatura: ${soloTemperatura},
 soloUmidade: ${soloUmidade},
-ultimasMedicoes: ${ultimasMedicoes}
+ultimasMedicoes: ${ultimasMedicoes},
+series: ${series}
     ''';
   }
 }

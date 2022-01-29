@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:solotec/models/medicoes_model.dart';
 import 'package:solotec/services/firestore.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 part 'resumo_store.g.dart';
 
 class ResumoStore = _ResumoStoreBase with _$ResumoStore;
@@ -34,9 +35,15 @@ abstract class _ResumoStoreBase with Store {
   @observable
   List<MedicoesModel> ultimasMedicoes = <MedicoesModel>[];
 
+  @observable
+  List<charts.Series<MedicoesModel, DateTime>> series =
+      <charts.Series<MedicoesModel, DateTime>>[];
+
   getData() async {
     load = true;
     ultimasMedicoes = <MedicoesModel>[];
+    series = <charts.Series<MedicoesModel, DateTime>>[];
+
     await FirestoreManage.getUltimaMedicao()
         .then((value) => ultimasMedicoes.addAll(value));
 
@@ -46,11 +53,31 @@ abstract class _ResumoStoreBase with Store {
 
     soloTemperatura = ultimasMedicoes[0].a18b20Temperatura;
     soloUmidade = ultimasMedicoes[0].soilmoistureUmidade;
-    int h = ultimasMedicoes[0].hora! * 1000;
 
-    DateTime data = DateTime.fromMillisecondsSinceEpoch(h);
+    DateTime data =
+        DateTime.fromMillisecondsSinceEpoch(ultimasMedicoes[0].hora!.toInt());
     final df = new DateFormat('dd/MM/yyyy HH:mm ');
     atualizado = df.format(data);
+
+    series.add(
+      charts.Series(
+          id: "CO2",
+          data: ultimasMedicoes,
+          domainFn: (MedicoesModel mm, _) =>
+              DateTime.fromMillisecondsSinceEpoch(mm.hora!.toInt()),
+          measureFn: (MedicoesModel mm, _) => mm.ccs811Co2,
+          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault),
+    );
+
+    series.add(
+      charts.Series(
+          id: "H",
+          data: ultimasMedicoes,
+          domainFn: (MedicoesModel mm, _) =>
+              DateTime.fromMillisecondsSinceEpoch(mm.hora!.toInt()),
+          measureFn: (MedicoesModel mm, _) => mm.mq8Hidrogenio,
+          colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault),
+    );
 
     load = false;
   }

@@ -42,7 +42,7 @@ class VerEstacaoPage extends StatelessWidget {
                 Navigator.of(context).pop();
               },
             ),
-            IconButton(
+            /*IconButton(
               icon: Icon(
                 Icons.delete,
                 color: Colors.white,
@@ -73,7 +73,7 @@ class VerEstacaoPage extends StatelessWidget {
                   },
                 );
               },
-            )
+            )*/
           ],
         ),
         body: ListView(

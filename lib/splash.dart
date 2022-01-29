@@ -26,7 +26,7 @@ class Splash extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate
         ],
         supportedLocales: [const Locale('pt', 'BR')],
-        title: 'SoloTec',
+        title: 'SoloTech',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.brown,

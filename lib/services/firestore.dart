@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:solotec/models/estacao_model.dart';
 import 'package:solotec/models/medicoes_model.dart';
 import 'package:solotec/models/relatorios_model.dart';
@@ -21,9 +22,29 @@ class FirestoreManage {
         .set(model);
   }
 
-  static Future<void> editEstacao(EstacaoModel model) async {}
+  static Future<void> editEstacao(EstacaoModel model) async {
+    await _db
+        .collection(getUser()!.uid)
+        .doc('Estacoes')
+        .collection('itens')
+        .withConverter(
+            fromFirestore: (json, _) => EstacaoModel.fromJson(json.data()!),
+            toFirestore: (EstacaoModel json, _) => json.toJson())
+        .doc(model.path)
+        .set(model, SetOptions(merge: true));
+  }
 
-  static Future<void> deleteEstacao(EstacaoModel model) async {}
+  static Future<void> deleteEstacao(EstacaoModel model) async {
+    await _db
+        .collection(getUser()!.uid)
+        .doc('Estacoes')
+        .collection('itens')
+        .withConverter(
+            fromFirestore: (json, _) => EstacaoModel.fromJson(json.data()!),
+            toFirestore: (EstacaoModel json, _) => json.toJson())
+        .doc(model.path)
+        .delete();
+  }
 
   static Future<List<EstacaoModel>> getEstacao() async {
     List<EstacaoModel> modelList = <EstacaoModel>[];
@@ -38,6 +59,7 @@ class FirestoreManage {
         .then((value) {
       for (QueryDocumentSnapshot item in value.docs) {
         EstacaoModel m = item.data() as EstacaoModel;
+        m.path = item.id;
         modelList.add(m);
       }
     });

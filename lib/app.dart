@@ -62,7 +62,43 @@ class App extends StatelessWidget {
                           FloatingActionButtonLocation.centerDocked,
                       floatingActionButton: /*FloatingActionButton(
                         child: Icon(Icons.arrow_downward),
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                              enableDrag: false,
+                              isDismissible: false,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                    padding: EdgeInsets.all(15),
+                                    height:
+                                        (MediaQuery.of(context).size.height /
+                                            2),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text('Atualizar Dados',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16)),
+                                          ],
+                                        ),
+                                        Divider(),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Icon(
+                                          Icons.wifi,
+                                          size: 150,
+                                        ),
+                                        Text(
+                                            'Atualmente o sistema só comporta atualizações automaticas atraves da rede.')
+                                      ],
+                                    ));
+                              });
+                        },
                       ),*/
                           Container(
                         decoration: BoxDecoration(

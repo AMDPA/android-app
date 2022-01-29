@@ -13,6 +13,8 @@ abstract class _EstacoesStoreBase with Store {
     getEstacoes();
   }
 
+  final scaffold = GlobalKey<ScaffoldState>();
+
   @observable
   List<EstacaoModel> estat = <EstacaoModel>[];
 
@@ -35,7 +37,34 @@ abstract class _EstacoesStoreBase with Store {
           .push(MaterialPageRoute(builder: (context) => AddEstacaoPage()));
       getEstacoes();
     } else {
-      //inf
+      showDialog(
+        barrierDismissible: false,
+        context: scaffold.currentContext!,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Center(child: Text('SINTO MUITO')),
+            content: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 10,
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Atualmente só é possível adicionar uma estação.',
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
+            ),
+            actions: [
+              ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('OK')),
+            ],
+          );
+        },
+      );
     }
   }
 

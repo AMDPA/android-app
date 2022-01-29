@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:solotec/includes/home_icons_solo_tec_icons.dart';
+import 'package:solotec/models/medicoes_model.dart';
 import 'package:solotec/pages/dados_page.dart';
 import 'package:solotec/stores/resumo_store.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class ResumoPage extends StatelessWidget {
   const ResumoPage(this.store, {Key? key}) : super(key: key);
@@ -90,10 +92,18 @@ class ResumoPage extends StatelessWidget {
                   Card(
                     elevation: 10,
                     child: Container(
-                      height: 250,
-                      width: 350,
-                      child: SimpleTimeSeriesChart.withSampleData(),
-                    ),
+                        height: 250,
+                        width: 350,
+                        child: Observer(
+                          builder: (_) {
+                            return charts.TimeSeriesChart(
+                              store.series,
+                              animate: true,
+                              dateTimeFactory:
+                                  const charts.LocalDateTimeFactory(),
+                            );
+                          },
+                        )),
                   )
                 ],
               )

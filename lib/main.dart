@@ -15,15 +15,6 @@ Future<void> main() async {
   //Init firebase
   await Firebase.initializeApp();
 
-  if (!Platform.isAndroid &&
-      !Platform.isFuchsia &&
-      !Platform.isIOS &&
-      !Platform.isLinux &&
-      !Platform.isMacOS &&
-      !Platform.isWindows) {
-    await FirebaseFirestore.instance.enablePersistence();
-  }
-
   if (kDebugMode) {
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
   } else {

@@ -8,6 +8,7 @@ class EstacaoModel {
   LocalRede? localRede;
   DateTime? createdAt;
   DateTime updateAt = DateTime.now();
+  String path = '';
 
   EstacaoModel({
     this.id,

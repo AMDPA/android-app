@@ -81,7 +81,7 @@ abstract class _AddEstacaoStoreBase with Store {
     RedeManage.openWifiSettings();
     _loadDialog("Aguarde...");
 
-    await Future.delayed(Duration(seconds: 30));
+    await Future.delayed(Duration(seconds: 10));
 
     redeModel = await RedeManage.getRedeInfo();
     redeSel = true;

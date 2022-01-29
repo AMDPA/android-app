@@ -27,6 +27,7 @@ class _GerenciarEstacoesPageState extends State<GerenciarEstacoesPage> {
         create: (_) => EstacoesStore(),
         child: Consumer<EstacoesStore>(builder: (context, store, _) {
           return Scaffold(
+            key: store.scaffold,
             backgroundColor: Colors.white,
             appBar: AppBar(
               backgroundColor: Color(0xff612B02),

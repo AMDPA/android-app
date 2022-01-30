@@ -54,8 +54,8 @@ abstract class _ResumoStoreBase with Store {
     soloTemperatura = ultimasMedicoes[0].a18b20Temperatura;
     soloUmidade = ultimasMedicoes[0].soilmoistureUmidade;
 
-    DateTime data =
-        DateTime.fromMillisecondsSinceEpoch(ultimasMedicoes[0].hora!.toInt());
+    DateTime data = DateTime.fromMillisecondsSinceEpoch(
+        (ultimasMedicoes[0].hora!.toInt() * 1000).round());
     final df = new DateFormat('dd/MM/yyyy HH:mm ');
     atualizado = df.format(data);
 
@@ -64,7 +64,8 @@ abstract class _ResumoStoreBase with Store {
           id: "CO2",
           data: ultimasMedicoes,
           domainFn: (MedicoesModel mm, _) =>
-              DateTime.fromMillisecondsSinceEpoch(mm.hora!.toInt()),
+              DateTime.fromMillisecondsSinceEpoch(
+                  (mm.hora!.toInt() * 1000).round()),
           measureFn: (MedicoesModel mm, _) => mm.ccs811Co2,
           colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault),
     );
@@ -74,7 +75,8 @@ abstract class _ResumoStoreBase with Store {
           id: "H",
           data: ultimasMedicoes,
           domainFn: (MedicoesModel mm, _) =>
-              DateTime.fromMillisecondsSinceEpoch(mm.hora!.toInt()),
+              DateTime.fromMillisecondsSinceEpoch(
+                  (mm.hora!.toInt() * 1000).round()),
           measureFn: (MedicoesModel mm, _) => mm.mq8Hidrogenio,
           colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault),
     );

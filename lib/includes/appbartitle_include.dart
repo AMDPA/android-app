@@ -45,7 +45,7 @@ class AppBarTitle extends StatelessWidget {
                 fontSize: 20,
               ),
             ),
-            Consumer<ResumoStore>(builder: (_, store, __) {
+            /*Consumer<ResumoStore>(builder: (_, store, __) {
               return Observer(builder: (_) {
                 return DropdownButton<String>(
                     onChanged: (String? a) {},
@@ -61,7 +61,7 @@ class AppBarTitle extends StatelessWidget {
                       ),
                     ]);
               });
-            })
+            })*/
           ],
         );
 

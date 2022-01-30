@@ -35,7 +35,7 @@ class SobrePage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
               subtitle: Text(
-                "Versão: 1.0.0",
+                "Versão: 1.1.0",
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -52,18 +52,6 @@ class SobrePage extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-            ListTile(
-              title: Text("Contrato de licença usuario final"),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text("Politica de privacidade"),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text("Códigos de terceiros"),
-              onTap: () {},
-            )
           ],
         ),
       ),

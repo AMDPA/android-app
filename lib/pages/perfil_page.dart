@@ -42,31 +42,6 @@ class PerfilPage extends StatelessWidget {
                 body: ListView(
                   padding: EdgeInsets.all(15),
                   children: [
-                    Observer(
-                      builder: (_) {
-                        if (store.imagem != null) {
-                          return CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              store.imagem!,
-                            ),
-                            radius: 80,
-                          );
-                        } else {
-                          return CircleAvatar(
-                            radius: 80,
-                            child: (store.anonymous!
-                                ? Text('U', style: TextStyle(fontSize: 50))
-                                : (store.imagem != null
-                                    ? Container()
-                                    : Text(
-                                        store.nome!.characters
-                                            .characterAt(0)
-                                            .toString(),
-                                        style: TextStyle(fontSize: 50)))),
-                          );
-                        }
-                      },
-                    ),
                     SizedBox(
                       height: 10,
                     ),

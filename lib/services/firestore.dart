@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:solotec/models/estacao_model.dart';
 import 'package:solotec/models/medicoes_model.dart';
 import 'package:solotec/models/relatorios_model.dart';
@@ -119,6 +118,32 @@ class FirestoreManage {
       }
     });
 
+    return modelList;
+  }
+
+  static Future<List<MedicoesModel>> getPeriodo(
+      DateTime inicio, DateTime fim) async {
+    int inicioEpox = (inicio.millisecondsSinceEpoch / 1000).round();
+    int fimEpox = (fim.millisecondsSinceEpoch / 1000).round();
+
+    List<MedicoesModel> modelList = [];
+    await _db
+        .collection(getUser()!.uid)
+        .doc('Dados')
+        .collection('itens')
+        .withConverter(
+            fromFirestore: (json, _) => MedicoesModel.fromJson(json.data()!),
+            toFirestore: (MedicoesModel json, _) => json.toJson())
+        .where("hora", isGreaterThanOrEqualTo: inicioEpox)
+        .where("hora", isLessThanOrEqualTo: fimEpox)
+        .orderBy("hora")
+        .get()
+        .then((value) {
+      for (QueryDocumentSnapshot item in value.docs) {
+        MedicoesModel m = item.data() as MedicoesModel;
+        modelList.add(m);
+      }
+    });
     return modelList;
   }
 
